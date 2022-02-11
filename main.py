@@ -1,3 +1,4 @@
+from tkinter.tix import Select
 from flask import Flask, render_template, redirect, url_for
 from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
@@ -10,28 +11,21 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'randomnotsoRandomKey35828skdfjWaions'
 Bootstrap(app)
 
-class ValidateTime(object):
-    def __init__(self, message=None):
-        if not message:
-            message = "You must enter a valid time"
-        self.message = message
-    def __call__(self, form, field):
-        valid_data = ['0', '1', '2', '3','4','5','6','7','8','9','0',':','A','P','M']
-        data = field.data
-        for i in data:
-            if i in valid_data:
-                pass
-            else:
-                raise ValidationError(self.message)
-
 
 class RestaurantForm(FlaskForm):
+    hour_choices = [('5'), ('6'), ('7'), ('8'), ('9'), ('10'), ('11'), ('12'), ('1'), ('2'), ('3'), ('4')]
+    am_pm = [("AM"), ("PM")]
+    minute_choices = [('00'), ('15'), ('30'), ('45')]
     restaurant = StringField('Restaurant Name', validators=[DataRequired()])
     style = StringField(label='Culture of Origin e.g. Mexican', validators=[DataRequired()])
     website = StringField(label='Website', validators=[DataRequired(), URL()])
     location = StringField(label='Restaurant Location on Google Maps by URL', validators=[DataRequired(), URL()])
-    open_time = StringField(label="Opening Time e.g. 8AM", validators=[DataRequired(), Length(min=3, max=7), ValidateTime()])
-    close_time = StringField(label="Closing Time e.g. 10:30PM", validators=[DataRequired(), Length(min=3, max=7), ValidateTime()])
+    open_hour = SelectField(label='Opening Time', choices=hour_choices)
+    open_mins = SelectField(label='Select Minutes', choices=minute_choices)
+    open_am_pm = SelectField(label='Select AM or PM', choices=am_pm)
+    close_time = SelectField(label='Closing Time', choices=hour_choices)
+    close_mins = SelectField(label='Select Minutes', choices=minute_choices)
+    close_am_pm = SelectField(label='Select AM or PM', choices=am_pm)
     food_rating = SelectField(label="Food Rating", choices=[('✘'), ('😋'), ('😋😋'), ('😋😋😋'), ('😋😋😋😋'), ('😋😋😋😋😋')])
     price = SelectField(label="Pricing", choices=[('💸'), ('💸💸'), ('💸💸💸')])
     service = SelectField(label="Service", choices=[('👍'), ('👍👍'), ('👍👍👍'), ('👍👍👍👍'), ('👍👍👍👍👍')])
@@ -39,12 +33,19 @@ class RestaurantForm(FlaskForm):
 
 
 class WishListForm(FlaskForm):
+    hour_choices = [('5'), ('6'), ('7'), ('8'), ('9'), ('10'), ('11'), ('12'), ('1'), ('2'), ('3'), ('4')]
+    am_pm = [("AM"), ("PM")]
+    minute_choices = [('00'), ('15'), ('30'), ('45')]
     restaurant = StringField('Restaurant Name', validators=[DataRequired()])
     style = StringField(label='Culture of Origin e.g. Mexican', validators=[DataRequired()])
     website = StringField(label='Website', validators=[DataRequired(), URL()])
     location = StringField(label='Restaurant Location on Google Maps by URL', validators=[DataRequired(), URL()])
-    open_time = StringField(label="Opening Time e.g. 8AM", validators=[DataRequired(), Length(min=3, max=7), ValidateTime()])
-    close_time = StringField(label="Closing Time e.g. 10:30PM", validators=[DataRequired(), Length(min=3, max=7), ValidateTime()])
+    open_hour = SelectField(label='Opening Time', choices=hour_choices)
+    open_mins = SelectField(label='Select Minutes', choices=minute_choices)
+    open_am_pm = SelectField(label='Select AM or PM', choices=am_pm)
+    close_time = SelectField(label='Closing Time', choices=hour_choices)
+    close_mins = SelectField(label='Select Minutes', choices=minute_choices)
+    close_am_pm = SelectField(label='Select AM or PM', choices=am_pm)
     submit = SubmitField('Submit')
     
 
@@ -62,8 +63,8 @@ def add_restaurant():
         new_restaurant.append(form.style.data)
         new_restaurant.append(form.website.data)
         new_restaurant.append(form.location.data)
-        new_restaurant.append(form.open_time.data)
-        new_restaurant.append(form.close_time.data)
+        new_restaurant.append(form.open_hour.data + ":" + form.open_mins.data + form.open_am_pm.data)
+        new_restaurant.append(form.close_time.data + ":" + form.close_mins.data + form.close_am_pm.data)
         new_restaurant.append(form.food_rating.data)
         new_restaurant.append(form.price.data)
         new_restaurant.append(form.service.data)
@@ -94,8 +95,8 @@ def add_try_restaurant():
         new_restaurant.append(form.restaurant.data)
         new_restaurant.append(form.style.data)
         new_restaurant.append(form.location.data)
-        new_restaurant.append(form.open_time.data)
-        new_restaurant.append(form.close_time.data)
+        new_restaurant.append(form.open_hour.data + ":" + form.open_mins.data + form.open_am_pm.data)
+        new_restaurant.append(form.close_time.data + ":" + form.close_mins.data + form.close_am_pm.data)
         with open('wishlist-data.csv', 'a', encoding='utf8', newline='') as csv_file:
             writer_object = csv.writer(csv_file)
             writer_object.writerow(new_restaurant)
