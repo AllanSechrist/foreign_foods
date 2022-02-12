@@ -1,13 +1,35 @@
-from flask import render_template, redirect, url_for
-from forms import RestaurantForm
+from flask import render_template, redirect, url_for, abort
+from flask_login import login_user, LoginManager, login_required, current_user, logout_user
+from werkzeug.security import generate_password_hash, check_password_hash
+from forms import *
 from tables import *
-from application import app
+from application import app, login_manager
+from functools import wraps
+from datetime import date
 
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
+
+def admin_only(function):
+    @wraps(function)
+    def wrapper_function(*args, **kwargs):
+        if not current_user.is_authenticated or current_user.id !=1:
+            return abort(403)
+        return function(*args, **kwargs)
+    return wrapper_function
 
 
 @app.route("/")
 def home():
     return render_template('index.html')
+
+
+@app.route('/admin')
+def login():
+    pass
 
 
 @app.route("/add", methods=["GET", "POST"])
@@ -34,18 +56,27 @@ def add_restaurant():
 
 @app.route('/restaurants')
 def restaurants():
-    header = ['Restaurant','Style','Website','Location','Open','Close','Food','Price','Service']
+    header = ['Restaurant','Style','Website','Location','Open','Close','Food','Price','Service', 'blog']
     restaurants = Restaurant.query.all()
     return render_template('restaurants.html',header=header, restaurants=restaurants)
 
-# @app.route('/restaurants')
-# def restaurants():
-#     with open('restaurants-data.csv', encoding='utf8', newline='') as csv_file:
-#         csv_data = csv.reader(csv_file, delimiter=',')
-#         rows = []
-#         for row in csv_data:
-#             rows.append(row)
-#     return render_template('restaurants.html', restaurants=rows)
+
+@app.route("/new-post", methods=["GET", "POST"])
+# @admin_only
+def add_new_post():
+    form = BlogForm()
+    # if form.validate_on_submit:
+    #     new_post = BlogPost(
+    #         title=form.title.data,
+    #         subtitle=form.subtitle.data,
+    #         body=form.body.data,
+    #         author=current_user,
+    #         date=date.today().strftime("%B %d, %Y")
+    #     )
+    #     db.session.add(new_post)
+    #     db.session.commit()
+    #     return redirect(url_for("restaurants"))
+    return render_template("make-blog.html", form=form)
 
 
 if __name__=='__main__':

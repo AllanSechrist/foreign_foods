@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, SelectField
+from wtforms import StringField, SubmitField, SelectField, PasswordField
 from wtforms.validators import DataRequired, URL
+from flask_ckeditor import CKEditorField
 
 
 class RestaurantForm(FlaskForm):
@@ -21,3 +22,16 @@ class RestaurantForm(FlaskForm):
     price = SelectField(label="Pricing", choices=[('💸'), ('💸💸'), ('💸💸💸')])
     service = SelectField(label="Service", choices=[('👍'), ('👍👍'), ('👍👍👍'), ('👍👍👍👍'), ('👍👍👍👍👍')])
     submit = SubmitField('Submit')
+
+
+class LoginForm(FlaskForm):
+    email = StringField('email', validators=[DataRequired()])
+    password = PasswordField('password', validators=[DataRequired()])
+    submit = SubmitField("Login")
+
+
+class BlogForm(FlaskForm):
+    title = StringField("Blog Post Title", validators=[DataRequired()])
+    subtitle = StringField("Subtitle", validators=[DataRequired()])
+    body = CKEditorField("Content", validators=[DataRequired()])
+    submit = SubmitField("Submit")
