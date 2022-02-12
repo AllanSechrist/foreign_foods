@@ -20,26 +20,25 @@
         <table class="table">
         <thead>
           <tr>
-            {% for item in restaurants[0] %}
+            {% for item in header %}
               <th scope="col">{{ item }}</th>
             {% endfor %}
           </tr>
         </thead>
         <tbody>
           {% for restaurant in restaurants %}
-            {% if loop.index != 1%}
               <tr>
-                {% for item in restaurant %}
-                  {% if loop.index == 3 %}
-                    <td><a href="{{ item }}">Link</a></td>
-                  {% elif loop.index == 4 %}
-                    <td><a href="{{ item }}">Maps Link</a></td>
-                  {% else %}
-                    <td>{{ item }}</td>
-                  {% endif %}
-                {% endfor %}
+                <td>{{ restaurant.name}}</td>
+                <td>{{ restaurant.style}}</td>
+                <td><a href="{{ restaurant.website}}">Link</a></td>
+                <td><a href="{{ restaurant.location}}">Map</a></td>  
+                <td>{{ restaurant.open}}</td>
+                <td>{{ restaurant.close}}</td>
+                <td>{{ restaurant.food_rating}}</td>
+                <td>{{ restaurant.price_rating}}</td>    
+                <td>{{ restaurant.service_rating}}</td>
               </tr>
-            {% endif %}
+            
           {% endfor %}
         </tbody>
             
