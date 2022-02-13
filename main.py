@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, abort
+from flask import render_template, redirect, url_for, abort, flash
 from flask_login import login_user, LoginManager, login_required, current_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from forms import *
@@ -27,12 +27,60 @@ def home():
     return render_template('index.html')
 
 
-@app.route('/admin')
+@app.route('/register', methods=["GET", "POST"])
+def register():
+    form = RegisterForm()
+    if form.validate_on_submit():
+        if User.query.filter_by(email=form.email.data).first():
+            flash("That email is in use")
+            return redirect(url_for('login'))
+        
+        hash_and_salted_password = generate_password_hash(
+            form.password.data,
+            method='pbkdf2:sha256',
+            salt_length=8
+        )
+        new_user = User(
+            email=form.email.data,
+            name=form.name.data,
+            password=hash_and_salted_password
+        )
+        db.session.add(new_user)
+        db.session.commit()
+        login_user(new_user)
+        return redirect(url_for('home'))
+
+    return render_template('register.html', form=form, current_user=current_user)
+
+
+@app.route('/admin', methods=["GET", "POST"])
 def login():
-    pass
+    form = LoginForm()
+    if form.validate_on_submit():
+        email = form.email.data
+        password = form.password.data
+
+        user = User.query.filter_by(email=email).first()
+        if not user:
+            flash("That email does not have an account")
+            return redirect(url_for('home'))
+        elif not check_password_hash(user.password, password):
+            flash("Password is wrong")
+            return redirect(url_for('login'))
+        else:
+            login_user(user)
+            return redirect(url_for('home'))
+    return render_template('login.html', form=form, current_user=current_user)
+
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('home'))
 
 
 @app.route("/add", methods=["GET", "POST"])
+@admin_only
 def add_restaurant():
     
     form = RestaurantForm()
@@ -61,21 +109,22 @@ def restaurants():
     return render_template('restaurants.html',header=header, restaurants=restaurants)
 
 
-@app.route("/new-post", methods=["GET", "POST"])
-# @admin_only
-def add_new_post():
+@app.route("/new-blog/<int:restaurant_id>", methods=["GET", "POST"])
+@admin_only
+def add_new_post(restaurant_id):
     form = BlogForm()
-    # if form.validate_on_submit:
-    #     new_post = BlogPost(
-    #         title=form.title.data,
-    #         subtitle=form.subtitle.data,
-    #         body=form.body.data,
-    #         author=current_user,
-    #         date=date.today().strftime("%B %d, %Y")
-    #     )
-    #     db.session.add(new_post)
-    #     db.session.commit()
-    #     return redirect(url_for("restaurants"))
+    requested_restaurant = Restaurant.query.get(restaurant_id)
+    if form.validate_on_submit:
+        new_post = BlogPost(
+            title=form.title.data,
+            subtitle=form.subtitle.data,
+            body=form.body.data,
+            author=current_user,
+            date=date.today().strftime("%B %d, %Y")
+        )
+        db.session.add(new_post)
+        db.session.commit()
+        return redirect(url_for("restaurants"))
     return render_template("make-blog.html", form=form)
 
 
