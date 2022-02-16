@@ -1,5 +1,5 @@
 from flask import render_template, redirect, url_for, abort, flash
-from flask_login import login_user, LoginManager, login_required, current_user, logout_user
+from flask_login import login_user, login_required, current_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from forms import *
 from tables import *
@@ -82,7 +82,6 @@ def logout():
 @app.route("/add", methods=["GET", "POST"])
 @admin_only
 def add_restaurant():
-    
     form = RestaurantForm()
     if form.validate_on_submit():
         new_restaurant = Restaurant(
@@ -99,14 +98,21 @@ def add_restaurant():
         db.session.add(new_restaurant)
         db.session.commit()
         return redirect(url_for('home'))
-    return render_template('add.html', form=form)
+    return render_template('add.html', form=form, current_user=current_user)
 
 
 @app.route('/restaurants')
 def restaurants():
     header = ['Restaurant','Style','Website','Location','Open','Close','Food','Price','Service', 'blog']
     restaurants = Restaurant.query.all()
-    return render_template('restaurants.html',header=header, restaurants=restaurants)
+    return render_template('restaurants.html',header=header, restaurants=restaurants, current_user=current_user)
+
+
+@app.route('/restaurants/<restaurant_name>')
+def show_blog(restaurant_name):
+    requested_post = Restaurant.query.filter_by(name=restaurant_name).first()
+    return render_template('blog.html', post=requested_post)
+
 
 
 @app.route("/new-blog/<int:restaurant_id>", methods=["GET", "POST"])
@@ -114,18 +120,20 @@ def restaurants():
 def add_new_post(restaurant_id):
     form = BlogForm()
     requested_restaurant = Restaurant.query.get(restaurant_id)
-    if form.validate_on_submit:
+    if form.validate_on_submit():
         new_post = BlogPost(
             title=form.title.data,
             subtitle=form.subtitle.data,
             body=form.body.data,
             author=current_user,
-            date=date.today().strftime("%B %d, %Y")
+            date=date.today().strftime("%B %d, %Y"),
+            
+
         )
         db.session.add(new_post)
         db.session.commit()
         return redirect(url_for("restaurants"))
-    return render_template("make-blog.html", form=form)
+    return render_template("make-blog.html", form=form, requested_restaurant=requested_restaurant, current_user=current_user)
 
 
 if __name__=='__main__':

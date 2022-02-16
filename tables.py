@@ -10,7 +10,7 @@ class User(UserMixin, db.Model):
     password = db.Column(db.String(100))
     name = db.Column(db.String(100))
     posts = relationship("BlogPost", back_populates='author')
-db.create_all()
+# db.create_all()
 
 
 
@@ -27,7 +27,7 @@ class Restaurant(db.Model):
     price_rating = db.Column(db.String(10), nullable=False)
     service_rating = db.Column(db.String(10), nullable=False)
     blog_post = relationship("BlogPost", back_populates='restaurant')
-db.create_all()    
+# db.create_all()    
 
 
 class BlogPost(db.Model):
@@ -41,6 +41,6 @@ class BlogPost(db.Model):
     date = db.Column(db.String(250), nullable=False)
     body = db.Column(db.Text, nullable=False)
     restaurant = relationship('Restaurant', back_populates='blog_post')
-db.create_all()
+# db.create_all()
 
 

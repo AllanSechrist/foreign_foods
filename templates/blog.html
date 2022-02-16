@@ -1,0 +1,42 @@
+{% extends 'bootstrap/base.html' %}
+
+
+{% block content %}
+
+<div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="post-heading">
+                    <h1>{{post.blog_post.title}}</h1>
+                    <h2 class="subheading">{{post.blog_post.subtitle}}</h2>
+                    <span class="meta">Posted by
+             
+              on {{post.blog_post.date}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                
+                {{ post.blog_post.body|safe }}
+                <hr>
+               
+
+
+                
+
+
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+{% endblock %}

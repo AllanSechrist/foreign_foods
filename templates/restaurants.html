@@ -37,7 +37,8 @@
                 <td>{{ restaurant.food_rating}}</td>
                 <td>{{ restaurant.price_rating}}</td>    
                 <td>{{ restaurant.service_rating}}</td>
-                <td><a href="{{ restaurant.blog_post }}">Blog Post</a></td>
+                <td><a href="{{ url_for('show_blog', restaurant_name=restaurant.name) }}">Blog Post</a></td>
+                <td><a href="{{ url_for('add_new_post', restaurant_id=restaurant.id) }}">Add Blog</a></td>
               </tr>
             
           {% endfor %}
