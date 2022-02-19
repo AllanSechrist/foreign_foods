@@ -108,11 +108,10 @@ def restaurants():
     return render_template('restaurants.html',header=header, restaurants=restaurants, current_user=current_user)
 
 
-@app.route('/restaurants/<restaurant_name>')
-def show_blog(restaurant_name):
-    requested_post = Restaurant.query.filter_by(name=restaurant_name).first()
-    return render_template('blog.html', post=requested_post)
-
+@app.route('/blog/<int:restaurant_id>')
+def show_blog(restaurant_id):
+    requested_restaurant = Restaurant.query.get(restaurant_id)
+    return render_template('blog.html', restaurant=requested_restaurant)
 
 
 @app.route("/new-blog/<int:restaurant_id>", methods=["GET", "POST"])
@@ -126,14 +125,46 @@ def add_new_post(restaurant_id):
             subtitle=form.subtitle.data,
             body=form.body.data,
             author=current_user,
+            restaurant=requested_restaurant,
             date=date.today().strftime("%B %d, %Y"),
-            
-
         )
         db.session.add(new_post)
         db.session.commit()
         return redirect(url_for("restaurants"))
     return render_template("make-blog.html", form=form, requested_restaurant=requested_restaurant, current_user=current_user)
+
+
+@app.route("/edit-blog/<int:post_id>")
+@admin_only
+def edit_post(post_id):
+    post = BlogPost.query.get(post_id)
+    edit_form = BlogForm(
+        title=post.title,
+        subtitle=post.subtitle,
+        author=post.author,
+        body=post.body
+    )
+    if edit_form.validate_on_submit():
+        post.title = edit_form.title.data
+        post.subtitle = edit_form.subtitle.data
+        post.author = edit_form.author.data
+        post.body = edit_form.body.data
+        db.session.commit()
+        return redirect(url_for("show_blog", post_id=post.id))
+
+    return render_template("make-blog.html", form=edit_form, current_user=current_user)
+
+
+
+@app.route('/delete-blog/<int:blog_id>')
+@admin_only
+def delete_post(blog_id):
+    post_to_delete = BlogPost.query.get(blog_id)
+    db.session.delete(post_to_delete)
+    db.session.commit()
+    return redirect(url_for('restaurants'))
+
+
 
 
 if __name__=='__main__':

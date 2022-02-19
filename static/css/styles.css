@@ -4,23 +4,29 @@
 body {
     background-color: #5C5353;
     color: white;
-    }
+}
+
+span {
+    font-style: italic;
+}
     
-    a {
-        color: #F5CC38;
-    }
-    
-    .jumbotron {
-      display: flex;
-      align-items: center;
-      margin: 0;
-      height: 100vh;
-      color: white;
-      background-color: #5C5353;
-    }
-    
-    .space-above {
-        margin-top: 20px;
-        padding-top: 20px;
-    }
+a {
+    color: #F5CC38;
+}
+
+.jumbotron {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  height: 100vh;
+  color: white;
+  background-color: #5C5353;
+}
+
+.space-above {
+    margin-top: 20px;
+    padding-top: 20px;
+}
+
+
     
