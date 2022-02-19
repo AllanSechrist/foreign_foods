@@ -108,6 +108,12 @@ def restaurants():
     return render_template('restaurants.html',header=header, restaurants=restaurants, current_user=current_user)
 
 
+@app.route('/blog')
+def all_blogs():
+    blogs = BlogPost.query.all()
+    return render_template('all-blogs.html', blogs=blogs, current_user=current_user)
+
+
 @app.route('/blog/<int:restaurant_id>')
 def show_blog(restaurant_id):
     requested_restaurant = Restaurant.query.get(restaurant_id)
@@ -134,37 +140,33 @@ def add_new_post(restaurant_id):
     return render_template("make-blog.html", form=form, requested_restaurant=requested_restaurant, current_user=current_user)
 
 
-@app.route("/edit-blog/<int:post_id>")
+@app.route("/edit-blog/<int:blog_id>", methods=["GET", "POST"])
 @admin_only
-def edit_post(post_id):
-    post = BlogPost.query.get(post_id)
+def edit_blog(blog_id):
+    blog = BlogPost.query.get(blog_id)
     edit_form = BlogForm(
-        title=post.title,
-        subtitle=post.subtitle,
-        author=post.author,
-        body=post.body
+        title=blog.title,
+        subtitle=blog.subtitle,
+        author=blog.author,
+        body=blog.body
     )
     if edit_form.validate_on_submit():
-        post.title = edit_form.title.data
-        post.subtitle = edit_form.subtitle.data
-        post.author = edit_form.author.data
-        post.body = edit_form.body.data
+        blog.title = edit_form.title.data
+        blog.subtitle = edit_form.subtitle.data
+        blog.body = edit_form.body.data
         db.session.commit()
-        return redirect(url_for("show_blog", post_id=post.id))
+        return redirect(url_for("show_blog", restaurant_id=blog.restaurant_id))
 
     return render_template("make-blog.html", form=edit_form, current_user=current_user)
 
 
-
-@app.route('/delete-blog/<int:blog_id>')
+@app.route('/delete-blog/<int:blog_id>', methods=["GET", "POST"])
 @admin_only
-def delete_post(blog_id):
-    post_to_delete = BlogPost.query.get(blog_id)
-    db.session.delete(post_to_delete)
+def delete_blog(blog_id):
+    blog_to_delete = BlogPost.query.get(blog_id)
+    db.session.delete(blog_to_delete)
     db.session.commit()
     return redirect(url_for('restaurants'))
-
-
 
 
 if __name__=='__main__':

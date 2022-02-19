@@ -1,0 +1,43 @@
+{% extends 'bootstrap/base.html' %}
+
+
+{% block styles %}
+{{ super() }}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css')}}">
+{% endblock %}
+
+
+{% block title %}Blog Manager{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+  
+        <h1>All Blogs</h1>
+  
+        <table class="table">
+          {% for blog in blogs %}
+              <tr>
+                <td>{{ blog.title}}</td>
+                <td>{{ blog.subtitle}}</td>
+                <td>{{ blog.date}}</td>
+                <td><a href="{{ url_for('show_blog', restaurant_id=blog.restaurant_id) }}">Blog Post</a></td>
+                {% if current_user.id == 1%}
+                  <td><a href="{{ url_for('delete_blog', blog_id=blog.id)}}">delete blog</a></td>
+                  <td><a href="{{ url_for('edit_blog', blog_id=blog.id)}}">edit blog</a></td>
+                {% endif %}
+              </tr>
+            
+          {% endfor %}
+        </tbody>
+            
+        </table>
+        <p><a href="{{ url_for('home') }}">Return to index page</a></p>
+  
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
