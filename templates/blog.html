@@ -12,12 +12,13 @@
 <div class="container">
   <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
- {% for blog in restaurant.blog_post %}
+{% if restaurant.blog_post %}
+  {% for blog in restaurant.blog_post %}
         <div class="post-heading">
           <h1>{{blog.title}}</h1>
             <h2 class="subheading">{{blog.subtitle}}</h2>
             <span class="meta">Posted by {{blog.author.name}} on {{blog.date}}</span>
-        </div>
+        </div>  
       </div>
   </div>
 </div>
@@ -27,7 +28,7 @@
 <article>
   <div class="container">
     <div class="row">
-      <div class="col-lg-8 col-md-10 mx-auto space-above">
+      <div class="col-lg-8 col-md-10 mx-auto top-adjust">
           <hr>                
         {{ blog.body|safe }}
           <hr>
@@ -40,6 +41,9 @@
   </div>
 </article>
 {% endfor %}
+{% else %}
+  <h1>Blog Coming Soon!</h1>
+{% endif %}
 
 
 {% endblock %}
