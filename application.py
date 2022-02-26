@@ -3,13 +3,14 @@ from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_ckeditor import CKEditor
+from secret_keys import SECRET_KEY
 
 app = Flask(__name__)
 login_manager = LoginManager()
 login_manager.init_app(app)
 
 
-app.config['SECRET_KEY'] = 'randomnotsoRandomKey35828skdfjWaions'
+app.config['SECRET_KEY'] = SECRET_KEY
 ckeditor= CKEditor(app)
 Bootstrap(app)
 
