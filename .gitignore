@@ -146,8 +146,10 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
-secret_keys.py
 
-register.html
+
 
 # End of https://www.toptal.com/developers/gitignore/api/flask
+secret_keys.py
+register.html
+.idea
