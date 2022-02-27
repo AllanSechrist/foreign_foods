@@ -33,30 +33,30 @@ def about():
     return render_template('about.html')
 
 
-@app.route('/register', methods=["GET", "POST"])
-def register():
-    form = RegisterForm()
-    if form.validate_on_submit():
-        if User.query.filter_by(email=form.email.data).first():
-            flash("That email is in use")
-            return redirect(url_for('login'))
+# @app.route('/register', methods=["GET", "POST"])
+# def register():
+#     form = RegisterForm()
+#     if form.validate_on_submit():
+#         if User.query.filter_by(email=form.email.data).first():
+#             flash("That email is in use")
+#             return redirect(url_for('login'))
         
-        hash_and_salted_password = generate_password_hash(
-            form.password.data,
-            method='pbkdf2:sha256',
-            salt_length=8
-        )
-        new_user = User(
-            email=form.email.data,
-            name=form.name.data,
-            password=hash_and_salted_password
-        )
-        db.session.add(new_user)
-        db.session.commit()
-        login_user(new_user)
-        return redirect(url_for('home'))
+#         hash_and_salted_password = generate_password_hash(
+#             form.password.data,
+#             method='pbkdf2:sha256',
+#             salt_length=8
+#         )
+#         new_user = User(
+#             email=form.email.data,
+#             name=form.name.data,
+#             password=hash_and_salted_password
+#         )
+#         db.session.add(new_user)
+#         db.session.commit()
+#         login_user(new_user)
+#         return redirect(url_for('home'))
 
-    return render_template('register.html', form=form, current_user=current_user)
+#     return render_template('register.html', form=form, current_user=current_user)
 
 
 @app.route('/admin', methods=["GET", "POST"])
