@@ -151,5 +151,4 @@ cython_debug/
 
 # End of https://www.toptal.com/developers/gitignore/api/flask
 secret_keys.py
-register.html
 .idea
