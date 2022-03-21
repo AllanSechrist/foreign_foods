@@ -10,7 +10,22 @@ class User(UserMixin, db.Model):
     password = db.Column(db.String(100))
     name = db.Column(db.String(100))
     posts = relationship("BlogPost", back_populates='author')
+    events = relationship("Event", back_populates="creator")
 # db.create_all()
+
+
+class Event(db.Model):
+    __tablename__='events'
+    id = db.Column(db.Integer, primary_key=True)
+    creator_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    creator = relationship("User", back_populates='events')
+    name = db.Column(db.String(100), nullable=False)
+    date = db.Column(db.String(100), nullable=False)
+    location = db.Column(db.String(100), nullable=False)
+    # attending = db.Column(db.Integer, nullable=False)
+    description = db.Column(db.String(1000), nullable=False)
+    public = db.Column(db.Boolean, nullable=False, default=False)
+
 
 
 
