@@ -57,7 +57,6 @@ def about():
 
 #     return render_template('register.html', form=form, current_user=current_user)
 
-
 @app.route('/admin', methods=["GET", "POST"])
 def login():
     form = LoginForm()
