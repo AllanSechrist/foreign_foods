@@ -1,4 +1,5 @@
-from .extensions import db
+from ..extensions import db
+from sqlalchemy.orm import relationship
 
 class Restaurant(db.Model):
     __tablename__='restaurants'
