@@ -2,7 +2,7 @@ from flask import Flask
 
 from .extensions import db, bootstrap, ckeditor, login_manager
 
-from .controllers.routes import site
+from .controllers.site import site
 
 def create_app(config_file="settings.py"):
     app = Flask(__name__)
