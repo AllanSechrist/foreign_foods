@@ -8,13 +8,13 @@ from ..models.blog_post import BlogPost
 from ..models.forms import LoginForm, RestaurantForm, BlogForm, RegisterForm
 
 
-blog = Blueprint('blog', __name__, prefix='/blog' template_folder='templates')
+blog = Blueprint('blog', __name__, url_prefix='/blog', template_folder='templates')
 
 
-@blog.routes('/')
+@blog.route('/')
 def all_blogs():
-    blogs = BlogPost.query.all()
-    return render_template('all-blogs.html', blogs=blogs, current_user=current_user)
+    posts = BlogPost.query.all()
+    return render_template('all-blogs.html', posts=posts, current_user=current_user)
 
 
 @blog.route('/<int:restaurant_id>')

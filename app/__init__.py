@@ -3,6 +3,7 @@ from flask import Flask
 from .extensions import db, bootstrap, ckeditor, login_manager
 
 from .controllers.site import site
+from .controllers.blog import blog
 
 def create_app(config_file="settings.py"):
     app = Flask(__name__)
@@ -14,5 +15,6 @@ def create_app(config_file="settings.py"):
     login_manager.init_app(app)
     
     app.register_blueprint(site)
+    app.register_blueprint(blog)
 
     return app

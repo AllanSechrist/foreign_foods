@@ -18,15 +18,15 @@
         <h1>All Blogs</h1>
   
         <table class="table">
-          {% for blog in blogs %}
+          {% for post in posts %}
               <tr>
-                <td>{{ blog.title}}</td>
-                <td>{{ blog.subtitle}}</td>
-                <td>{{ blog.date}}</td>
-                <td><a href="{{ url_for('show_blog', restaurant_id=blog.restaurant_id) }}">Blog Post</a></td>
+                <td>{{ post.title}}</td>
+                <td>{{ post.subtitle}}</td>
+                <td>{{ post.date}}</td>
+                <td><a href="{{ url_for('blog.show_blog', restaurant_id=post.restaurant_id) }}">Blog Post</a></td>
                 {% if current_user.id == 1%}
-                  <td><a href="{{ url_for('delete_blog', blog_id=blog.id)}}">delete blog</a></td>
-                  <td><a href="{{ url_for('edit_blog', blog_id=blog.id)}}">edit blog</a></td>
+                  <td><a href="{{ url_for('blog.delete_blog', blog_id=post.id)}}">delete blog</a></td>
+                  <td><a href="{{ url_for('blog.edit_blog', blog_id=post.id)}}">edit blog</a></td>
                 {% endif %}
               </tr>
             
@@ -34,7 +34,7 @@
         </tbody>
             
         </table>
-        <p><a href="{{ url_for('site.home') }}">Return to index page</a></p>
+        <p><a href="{{ url_for('site.site_index') }}">Return to index page</a></p>
   
       </div>
     </div>

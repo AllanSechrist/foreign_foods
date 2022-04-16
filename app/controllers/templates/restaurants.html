@@ -37,9 +37,9 @@
                 <td>{{ restaurant.food_rating}}</td>
                 <td>{{ restaurant.price_rating}}</td>    
                 <td>{{ restaurant.service_rating}}</td>
-                <td><a href="{{ url_for('show_blog', restaurant_id=restaurant.id) }}">Blog Post</a></td>
+                <td><a href="{{ url_for('blog.show_blog', restaurant_id=restaurant.id) }}">Blog Post</a></td>
                 {% if current_user.id == 1 %}
-                  <td><a href="{{ url_for('add_new_post', restaurant_id=restaurant.id) }}">Add Blog</a></td>
+                  <td><a href="{{ url_for('blog.add_new_post', restaurant_id=restaurant.id) }}">Add Blog</a></td>
                 {% endif %}
               </tr>
             
@@ -47,8 +47,8 @@
         </tbody>
             
         </table>
-        <p><a href="{{ url_for('home') }}">Return to index page</a></p>
-        <p><a href="{{ url_for('all_blogs') }}">View All Blogs</a></p>
+        <p><a href="{{ url_for('site.site_index') }}">Return to index page</a></p>
+        <p><a href="{{ url_for('blog.all_blogs') }}">View All Blogs</a></p>
   
       </div>
     </div>
