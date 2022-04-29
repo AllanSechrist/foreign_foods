@@ -1,7 +1,7 @@
 from flask import render_template, redirect, Blueprint
 from flask_login import login_user, login_required, current_user, logout_user
 
-from ..extensions import login_manager
+from ..extensions import login_manager, db
 from ..models.restaurant import Restaurant
 from ..models.user import User
 from ..models.blog_post import BlogPost

@@ -13,6 +13,7 @@ def create_app(config_file="settings.py"):
     bootstrap.init_app(app)
     db.init_app(app)
     login_manager.init_app(app)
+    ckeditor.init_app(app)
     
     app.register_blueprint(site)
     app.register_blueprint(blog)
