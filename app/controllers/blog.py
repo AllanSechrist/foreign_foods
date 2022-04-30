@@ -1,5 +1,6 @@
-from flask import render_template, redirect, Blueprint
+from flask import render_template, redirect, Blueprint, url_for
 from flask_login import login_user, login_required, current_user, logout_user
+from datetime import date
 
 from ..extensions import login_manager, db
 from ..models.restaurant import Restaurant
@@ -39,7 +40,7 @@ def add_new_post(restaurant_id):
         )
         db.session.add(new_post)
         db.session.commit()
-        return redirect(url_for("restaurants"))
+        return redirect(url_for("site.restaurants"))
     return render_template("make-blog.html", form=form, requested_restaurant=requested_restaurant, current_user=current_user)
 
 
@@ -58,7 +59,7 @@ def edit_blog(blog_id):
         blog.subtitle = edit_form.subtitle.data
         blog.body = edit_form.body.data
         db.session.commit()
-        return redirect(url_for("show_blog", restaurant_id=blog.restaurant_id))
+        return redirect(url_for("blog.show_blog", restaurant_id=blog.restaurant_id))
 
     return render_template("make-blog.html", form=edit_form, current_user=current_user)
 
@@ -86,4 +87,4 @@ def delete_blog(blog_id):
     blog_to_delete = BlogPost.query.get(blog_id)
     db.session.delete(blog_to_delete)
     db.session.commit()
-    return redirect(url_for('site.restaurants'))
+    return redirect(url_for('blog.all_blogs'))

@@ -43,10 +43,10 @@ def login():
         user = User.query.filter_by(email=email).first()
         if not user:
             flash("That email does not have an account")
-            return redirect(url_for('site.site_index'))
+            return redirect(url_for('site.login'))
         elif not check_password_hash(user.password, password):
             flash("Password is wrong")
-            return redirect(url_for('login'))
+            return redirect(url_for('site.login'))
         else:
             login_user(user)
             return redirect(url_for('site.site_index'))
