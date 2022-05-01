@@ -1,6 +1,7 @@
-from flask import render_template, redirect, Blueprint, url_for
+from flask import render_template, redirect, Blueprint, url_for, abort
 from flask_login import login_user, login_required, current_user, logout_user
 from datetime import date
+from functools import wraps
 
 from ..extensions import login_manager, db
 from ..models.restaurant import Restaurant
@@ -10,6 +11,15 @@ from ..models.forms import LoginForm, RestaurantForm, BlogForm, RegisterForm
 
 
 blog = Blueprint('blog', __name__, url_prefix='/blog', template_folder='templates')
+
+
+def admin_only(function):
+    @wraps(function)
+    def wrapper_function(*args, **kwargs):
+        if not current_user.is_authenticated or current_user.id !=1:
+            return abort(403)
+        return function(*args, **kwargs)
+    return wrapper_function
 
 
 @blog.route('/')
@@ -25,7 +35,7 @@ def show_blog(restaurant_id):
 
 
 @blog.route("/new-blog/<int:restaurant_id>", methods=["GET", "POST"])
-# @admin_only
+@admin_only
 def add_new_post(restaurant_id):
     form = BlogForm()
     requested_restaurant = Restaurant.query.get(restaurant_id)
@@ -45,7 +55,7 @@ def add_new_post(restaurant_id):
 
 
 @blog.route("/edit-blog/<int:blog_id>", methods=["GET", "POST"])
-# @admin_only
+@admin_only
 def edit_blog(blog_id):
     blog = BlogPost.query.get(blog_id)
     edit_form = BlogForm(
@@ -82,7 +92,7 @@ def edit_blog(blog_id):
 
 
 @blog.route('/delete-blog/<int:blog_id>', methods=["GET", "POST"])
-# @admin_only
+@admin_only
 def delete_blog(blog_id):
     blog_to_delete = BlogPost.query.get(blog_id)
     db.session.delete(blog_to_delete)

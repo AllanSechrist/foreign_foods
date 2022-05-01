@@ -1,6 +1,7 @@
-from flask import render_template, redirect, Blueprint, flash, url_for
+from flask import render_template, redirect, Blueprint, flash, url_for, abort
 from flask_login import login_user, login_required, current_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
+from functools import wraps
 
 from ..extensions import login_manager, db
 from ..models.restaurant import Restaurant
@@ -15,6 +16,15 @@ site = Blueprint('site', __name__, template_folder='templates')
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
+
+
+def admin_only(function):
+    @wraps(function)
+    def wrapper_function(*args, **kwargs):
+        if not current_user.is_authenticated or current_user.id !=1:
+            return abort(403)
+        return function(*args, **kwargs)
+    return wrapper_function
 
 
 @site.route('/')
@@ -53,8 +63,14 @@ def login():
     return render_template('login.html', form=form, current_user=current_user)
 
 
+@site.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('site.site_index'))
+
+
 @site.route('/new-restaurant', methods=["GET", "POST"])
-#@admin_only
+@admin_only
 def add_restaurant():
     form = RestaurantForm()
     if form.validate_on_submit():
