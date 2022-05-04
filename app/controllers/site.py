@@ -27,6 +27,22 @@ def admin_only(function):
     return wrapper_function
 
 
+def format_restaurant(restaurant):
+    return {
+        "id": restaurant.id,
+        "name": restaurant.name,
+        "style": restaurant.style,
+        "website": restaurant.website,
+        "location": restaurant.location,
+        "open": restaurant.open,
+        "close": restaurant.close,
+        "food rating": restaurant.food_rating,
+        "price rating": restaurant.price_rating,
+        "service rating": restaurant.service_rating,
+        "blog_post": restaurant.blog_post
+    }
+
+
 @site.route('/')
 def site_index():
     return render_template('index.html')
@@ -36,7 +52,11 @@ def site_index():
 def restaurants():
     header = ['Restaurant','Style','Website','Location','Open','Close','Food','Price','Service', 'blog']
     restaurants = Restaurant.query.all()
-    return render_template('restaurants.html',header=header, restaurants=restaurants, current_user=current_user)
+    restaurants_list = []
+    for restaurant in restaurants:
+        restaurants_list.append(format_restaurant(restaurant))
+    # return render_template('restaurants.html',header=header, restaurants=restaurants, current_user=current_user)
+    return {"restaurants": restaurants_list}
 
 
 @site.route('/about')
