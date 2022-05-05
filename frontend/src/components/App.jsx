@@ -14,9 +14,9 @@ function App() {
 
   const fetchRestaurants = async () => {
     const data = await axios.get(`${baseURL}/restaurants`)
-    // const { restaurantsData } = data.data
-    setRestaurantList(data.data.restaurant)
-    console.log(data.data.restaurant)
+    const { restaurant } = data.data
+    setRestaurantList(restaurant)
+    // console.log(data.data.restaurant)
   }
 
   useEffect(() => {
@@ -33,6 +33,9 @@ function App() {
             key={restaurant.id}
             name={restaurant.name}
             style={restaurant.style}
+            rating={restaurant.food_rating}
+            price={restaurant.price_rating}
+            service={restaurant.service_rating}
           />
           )
           

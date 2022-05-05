@@ -17,13 +17,22 @@ export default function ActionAreaCard(props) {
           <Typography variant="body2" color="text.secondary">
             {props.style}
           </Typography>
+          <Typography variant="body1">
+            {props.rating}
+          </Typography>
+          <Typography variant="body1">
+            {props.price}
+          </Typography>
+          <Typography variant="body1">
+            {props.service}
+          </Typography>
         </CardContent>
-        <CardMedia
+        {/* <CardMedia
           component="img"
           height="140"
           image="/static/images/cards/contemplative-reptile.jpg"
           alt="green iguana"
-        />
+        /> */}
       </CardActionArea>
     </Card>
   );
