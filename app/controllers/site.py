@@ -48,7 +48,7 @@ def site_index():
     return render_template('index.html')
 
 
-@site.route('/restaurants')
+@site.route('/restaurants', methods=["GET"])
 def restaurants():
     header = ['Restaurant','Style','Website','Location','Open','Close','Food','Price','Service', 'blog']
     restaurants = Restaurant.query.all()

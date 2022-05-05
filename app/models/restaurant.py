@@ -1,4 +1,4 @@
-from ..extensions import db
+from ..extensions import db, ma
 from sqlalchemy.orm import relationship
 
 class Restaurant(db.Model):
@@ -15,3 +15,8 @@ class Restaurant(db.Model):
     service_rating = db.Column(db.String(10), nullable=False)
     blog_post = relationship("BlogPost", back_populates='restaurant')
 # db.create_all()    
+
+
+class RestaurantSchema(ma.ModelSchema):
+    class Meta:
+        model = Restaurant
