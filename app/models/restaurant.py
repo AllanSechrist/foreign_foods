@@ -17,6 +17,3 @@ class Restaurant(db.Model):
 # db.create_all()    
 
 
-class RestaurantSchema(ma.ModelSchema):
-    class Meta:
-        model = Restaurant

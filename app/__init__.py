@@ -3,6 +3,8 @@ from flask_cors import CORS
 
 from .extensions import db, ma, bootstrap, ckeditor, login_manager
 
+
+
 from .controllers.site import site
 from .controllers.blog import blog
 

@@ -15,7 +15,3 @@ class BlogPost(db.Model):
     restaurant = relationship('Restaurant', back_populates='blog_post')
 # db.create_all()
 
-
-class BlogPostSchema(ma.ModelSchema):
-    class Meta:
-        model = BlogPost

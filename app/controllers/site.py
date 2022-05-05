@@ -1,13 +1,14 @@
-from flask import render_template, redirect, Blueprint, flash, url_for, abort
+from flask import render_template, redirect, Blueprint, flash, url_for, abort, jsonify
 from flask_login import login_user, login_required, current_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from functools import wraps
 
 from ..extensions import login_manager, db
-from ..models.restaurant import Restaurant
-from ..models.user import User
 from ..models.blog_post import BlogPost
+from ..models.user import User
+from ..models.restaurant import Restaurant
 from ..models.forms import LoginForm, RestaurantForm, BlogForm, RegisterForm
+from ..models.schemas import BlogPostSchema, UserSchema, RestaurantSchema
 
 
 site = Blueprint('site', __name__, template_folder='templates')
@@ -27,20 +28,20 @@ def admin_only(function):
     return wrapper_function
 
 
-def format_restaurant(restaurant):
-    return {
-        "id": restaurant.id,
-        "name": restaurant.name,
-        "style": restaurant.style,
-        "website": restaurant.website,
-        "location": restaurant.location,
-        "open": restaurant.open,
-        "close": restaurant.close,
-        "food rating": restaurant.food_rating,
-        "price rating": restaurant.price_rating,
-        "service rating": restaurant.service_rating,
-        "blog_post": restaurant.blog_post
-    }
+# def format_restaurant(restaurant):
+#     return {
+#         "id": restaurant.id,
+#         "name": restaurant.name,
+#         "style": restaurant.style,
+#         "website": restaurant.website,
+#         "location": restaurant.location,
+#         "open": restaurant.open,
+#         "close": restaurant.close,
+#         "food rating": restaurant.food_rating,
+#         "price rating": restaurant.price_rating,
+#         "service rating": restaurant.service_rating,
+#         "blog_post": restaurant.blog_post
+#     }
 
 
 @site.route('/')
@@ -50,13 +51,12 @@ def site_index():
 
 @site.route('/restaurants', methods=["GET"])
 def restaurants():
-    header = ['Restaurant','Style','Website','Location','Open','Close','Food','Price','Service', 'blog']
+    # header = ['Restaurant','Style','Website','Location','Open','Close','Food','Price','Service', 'blog']
     restaurants = Restaurant.query.all()
-    restaurants_list = []
-    for restaurant in restaurants:
-        restaurants_list.append(format_restaurant(restaurant))
-    # return render_template('restaurants.html',header=header, restaurants=restaurants, current_user=current_user)
-    return {"restaurants": restaurants_list}
+    restaurant_schema = RestaurantSchema(many=True)
+    output = restaurant_schema.dump(restaurants)
+    return jsonify({'restaurant' : output})
+    
 
 
 @site.route('/about')

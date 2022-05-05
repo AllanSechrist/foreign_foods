@@ -2,8 +2,8 @@ import {useEffect, useState} from "react"
 import axios from "axios"
 import Header from "./Header";
 import Footer from "./Footer";
-import AreaActionCard from "./Card";
 import '../App.css';
+import ActionAreaCard from "./Card";
 
 
 const baseURL = "http://localhost:5000"
@@ -14,9 +14,9 @@ function App() {
 
   const fetchRestaurants = async () => {
     const data = await axios.get(`${baseURL}/restaurants`)
-    const { restaurants } = data.data
-    // setRestaurantList(restaurants)
-    console.log("DATA: ", data)
+    // const { restaurantsData } = data.data
+    setRestaurantList(data.data.restaurant)
+    console.log(data.data.restaurant)
   }
 
   useEffect(() => {
@@ -27,7 +27,16 @@ function App() {
     <div className="App">
       <Header />
         <h1>Sup</h1>
-        <AreaActionCard />
+        {restaurantList.map((restaurant) => {
+          return(
+            <ActionAreaCard 
+            key={restaurant.id}
+            name={restaurant.name}
+            style={restaurant.style}
+          />
+          )
+          
+        })}
       <Footer />
     </div>
   );
