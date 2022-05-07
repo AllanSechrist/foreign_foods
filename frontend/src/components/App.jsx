@@ -11,6 +11,7 @@ const baseURL = "http://localhost:5000"
 
 function App() {
   const [restaurantList, setRestaurantList] = useState([])
+  const [blogList, setBlogList] = useState([])
 
   const fetchRestaurants = async () => {
     const data = await axios.get(`${baseURL}/restaurants`)
@@ -19,8 +20,19 @@ function App() {
     // console.log(data.data.restaurant)
   }
 
+  const fetchBlogs = async () => {
+    const data = await axios.get(`${baseURL}/blog`)
+    const {blog} = data.data
+    setBlogList(blog)
+    console.log(blog)
+  }
+
   useEffect(() => {
     fetchRestaurants()
+  }, [])
+
+  useEffect(() => {
+    fetchBlogs()
   }, [])
 
   return (

@@ -1,4 +1,4 @@
-from flask import render_template, redirect, Blueprint, url_for, abort
+from flask import render_template, redirect, Blueprint, url_for, abort, jsonify
 from flask_login import login_user, login_required, current_user, logout_user
 from datetime import date
 from functools import wraps
@@ -8,6 +8,7 @@ from ..models.restaurant import Restaurant
 from ..models.user import User
 from ..models.blog_post import BlogPost
 from ..models.forms import LoginForm, RestaurantForm, BlogForm, RegisterForm
+from ..models.schemas import BlogPostSchema, UserSchema, RestaurantSchema
 
 
 blog = Blueprint('blog', __name__, url_prefix='/blog', template_folder='templates')
@@ -24,8 +25,11 @@ def admin_only(function):
 
 @blog.route('/')
 def all_blogs():
-    posts = BlogPost.query.all()
-    return render_template('all-blogs.html', posts=posts, current_user=current_user)
+    blogs = BlogPost.query.all()
+    blog_schema = BlogPostSchema(many=True)
+    output = blog_schema.dump(blogs)
+    return jsonify({"blog": output})
+    # return render_template('all-blogs.html', posts=posts, current_user=current_user)
 
 
 @blog.route('/<int:restaurant_id>')
