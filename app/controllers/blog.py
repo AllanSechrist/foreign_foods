@@ -35,7 +35,11 @@ def all_blogs():
 @blog.route('/<int:restaurant_id>')
 def show_blog(restaurant_id):
     requested_restaurant = Restaurant.query.get(restaurant_id)
-    return render_template('blog.html', restaurant=requested_restaurant)
+    blog_post = requested_restaurant.blog_post
+    blog_schema = BlogPostSchema(many=True)
+    output = blog_schema.dump(blog_post)
+    return jsonify({"blog": output})
+    # return render_template('blog.html', restaurant=requested_restaurant)
 
 
 @blog.route("/new-blog/<int:restaurant_id>", methods=["GET", "POST"])
