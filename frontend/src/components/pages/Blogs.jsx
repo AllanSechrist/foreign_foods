@@ -24,6 +24,7 @@ function Blogs() {
                         key={blog.id}
                         title={blog.title}
                         subtitle={blog.subtitle}
+                        date={blog.date}
                         body={blog.body}
                     />
                 )

@@ -5,6 +5,7 @@ function BlogCard(props) {
         <div>
             <h1>{props.title}</h1>
             <h3>{props.subtitle}</h3>
+            <p>{props.date}</p>
             <p>{props.body}</p>
         </div>
     )
