@@ -22,6 +22,7 @@ function Blogs() {
                 return(
                     <BlogCard 
                         key={blog.id}
+                        id={blog.id}
                         title={blog.title}
                         subtitle={blog.subtitle}
                         date={blog.date}

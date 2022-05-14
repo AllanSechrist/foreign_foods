@@ -23,6 +23,7 @@ function Restaurants() {
                 return(
                     <ActionAreaCard 
                         key={restaurant.id}
+                        id={restaurant.id}
                         name={restaurant.name}
                         style={restaurant.style}
                         rating={restaurant.food_rating}

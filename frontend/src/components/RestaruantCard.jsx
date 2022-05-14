@@ -6,9 +6,10 @@ import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 
 export default function ActionAreaCard(props) {
+  const blogLink = `/blog/${props.id}`
   return (
     <Card sx={{ maxWidth: 345 }}>
-      <CardActionArea>
+      <CardActionArea href={blogLink}>
         
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
