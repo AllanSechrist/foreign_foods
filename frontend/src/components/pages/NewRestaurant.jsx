@@ -9,6 +9,14 @@ const onSubmit = async values => {
     window.alert(JSON.stringify(values, 0, 2))
 }
 
+const hours = Array.from(new Array(12), (x ,i) => i + 1)
+const ampm = ["AM", "PM"]
+const minutes = ['00', '15', '30', '45']
+const foodRating = [('✘'), ('😋'), ('😋😋'), ('😋😋😋'), ('😋😋😋😋'), ('😋😋😋😋😋')]
+const price = [('💸'), ('💸💸'), ('💸💸💸'), ('💸💸💸💸'), ('💸💸💸💸💸')]
+const service = [('👍'), ('👍👍'), ('👍👍👍'), ('👍👍👍👍'), ('👍👍👍👍👍')]
+
+
 function NewRestaurant() {
     return (
         <div>
@@ -69,6 +77,69 @@ function NewRestaurant() {
                                 </div>
                             )}
                         </Field>
+                        <div>
+                            <label>Open Hour</label>
+                            <Field name="open" component="select">
+                                    <option />
+                                    {hours.map((hour) => {
+                                        return(
+                                            <option value={hour}>{hour}</option>
+                                        )
+                                    })}
+                            </Field>
+                            <label>Minutes</label>
+                            <Field name="minutes" component="select">
+                                <option />
+                                {minutes.map((minute) => {
+                                    return(
+                                        <option value={minute}>{minute}</option>
+                                    )
+                                })}
+                            </Field>
+                            <label>AMPM</label>
+                            <Field name="ampm" component="select">
+                                <option />
+                                {ampm.map((option) => {
+                                    return (
+                                        <option value={option}>{option}</option>
+                                    )
+                                })}
+                            </Field>
+                        </div>
+                        <div>
+                            <label>Food Rating</label>
+                            <Field name="food rating" component="select">
+                                <option />
+                                {foodRating.map((rating) => {
+                                    return (
+                                        <option value={rating}>{rating}</option>
+                                    )
+                                })}
+                            </Field>
+                        </div>
+                        <div>
+                            <label>Price</label>
+                            <Field name="price" component="select">
+                                <option />
+                                {price.map((rating) => {
+                                    return (
+                                        <option value={rating}>{rating}</option>
+                                    )
+                                })}
+                            </Field>
+                        </div>
+                        <div>
+                            <label>Service</label>
+                            <Field name="service" component="select">
+                                <option />
+                                {service.map((rating) => {
+                                    return (
+                                        <option value={rating}>{rating}</option>
+                                    )
+                                })}
+                            </Field>
+                        </div>
+                        
                         <button type="submit">
                                 Submit
                         </button>
