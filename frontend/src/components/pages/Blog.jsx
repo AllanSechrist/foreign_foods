@@ -1,10 +1,10 @@
 import React, { useState, useEffect} from 'react'
 import axios from 'axios'
-import { useNavigate, useParams } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import BlogCard from '../BlogCard'
 
 function Blog() {
-    let navigate = useNavigate()
+    // let navigate = useNavigate()
     let { blogId } = useParams()
 
     const [blogToShow, setBlogToShow] = useState([])
