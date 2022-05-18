@@ -5,6 +5,8 @@ import Home from "./pages/Home"
 import Blog from "./pages/Blog"
 import NewRestaurant from './pages/NewRestaurant'
 import NewBlog from './pages/NewBlog'
+import About from './pages/About'
+import Login from './pages/Login'
 import Header from "./Header";
 import Footer from "./Footer";
 import React from 'react'
@@ -21,6 +23,8 @@ function PageRouter() {
                 <Link to="/new-restaurant">Add Restaurant</Link>
                 <Link to="/new-blog">Add Blog</Link>
                 <Link to="/blog">Blogs</Link>
+                <Link to="/about">About</Link>
+                <Link to="/login">Login</Link>
             </nav>
             <Routes>
                 <Route path="/" element={<Home/>} />
@@ -29,6 +33,8 @@ function PageRouter() {
                 <Route path="/new-blog" element={<NewBlog/>} />
                 <Route path="/blog" element={<Blogs />} />
                 <Route path="/blog/:blogId" element={<Blog />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/login" element={<Login />} />
             </Routes>
             <Footer />
         </Router>
