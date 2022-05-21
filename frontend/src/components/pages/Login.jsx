@@ -20,8 +20,14 @@ import { FORM_ERROR } from 'final-form'
 
 const onSubmit = async values => {
     await axios.post("http://localhost:5000/login", {
-        email: values.username,
-        password: values.password
+        "email": values.username,
+        "password": values.password
+    })
+    .then(function (response) {
+        console.log(response)
+    })
+    .catch(function (error) {
+        console.log(error)
     })
 }
 
