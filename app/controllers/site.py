@@ -1,7 +1,10 @@
-from flask import render_template, redirect, Blueprint, flash, url_for, abort, jsonify
+from flask import render_template, redirect, Blueprint, flash, url_for, abort, jsonify, request
 from flask_login import login_user, login_required, current_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from functools import wraps
+from flask_jwt_extended import create_access_token
+from flask_jwt_extended import get_jwt_identity
+from flask_jwt_extended import jwt_required
 
 from ..extensions import login_manager, db
 from ..models.blog_post import BlogPost
@@ -63,24 +66,29 @@ def restaurants():
 def about():
     return render_template('about.html')
 
-@site.route('/login', methods=['GET', 'POST'])
+@site.route('/login', methods=['POST'])
 def login():
-    form = LoginForm()
-    if form.validate_on_submit():
-        email = form.email.data
-        password = form.password.data
-
-        user = User.query.filter_by(email=email).first()
-        if not user:
-            flash("That email does not have an account")
-            return redirect(url_for('site.login'))
-        elif not check_password_hash(user.password, password):
-            flash("Password is wrong")
-            return redirect(url_for('site.login'))
-        else:
-            login_user(user)
-            return redirect(url_for('site.site_index'))
-    return render_template('login.html', form=form, current_user=current_user)
+    email = request.json.get("email", None)
+    password = request.json.get("password", None)
+    user = User.query.filter_by(email=email).first()
+    if not user:
+        return jsonify({"msg": "Email does not exist"}), 401
+    elif not check_password_hash(user.password, password):
+        return jsonify({"msg": "Password is wrong"}), 401
+    else:
+        access_token = create_access_token(identity=email)
+        return jsonify(access_token=access_token)
+        
+    #     if not user:
+    #         flash("That email does not have an account")
+    #         return redirect(url_for('site.login'))
+    #     elif not check_password_hash(user.password, password):
+    #         flash("Password is wrong")
+    #         return redirect(url_for('site.login'))
+    #     else:
+    #         login_user(user)
+    #         return redirect(url_for('site.site_index'))
+    # return render_template('login.html', form=form, current_user=current_user)
 
 
 @site.route('/logout')

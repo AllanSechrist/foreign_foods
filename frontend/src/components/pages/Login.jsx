@@ -1,23 +1,32 @@
-import React from 'react'
+import React, { useState } from 'react'
+import axios from 'axios'
 import { Form, Field } from 'react-final-form'
 import { FORM_ERROR } from 'final-form'
 
 
 
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
+// const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
+
+// const onSubmit = async values => {
+//     await sleep(300)
+//     if(values.username !== "Rein") {
+//         return { username: "Unknown Username"}
+//     }
+//     if(values.password !== 'password') {
+//         return { [FORM_ERROR]: 'Incorrect password'}
+//     }
+//     window.alert('LOGIN SUCCESS!')
+// }
 
 const onSubmit = async values => {
-    await sleep(300)
-    if(values.username !== "Rein") {
-        return { username: "Unknown Username"}
-    }
-    if(values.password !== 'password') {
-        return { [FORM_ERROR]: 'Incorrect password'}
-    }
-    window.alert('LOGIN SUCCESS!')
+    await axios.post("http://localhost:5000/login", {
+        email: values.username,
+        password: values.password
+    })
 }
 
 function Login() {
+
     return (
         <div>
             <h1>LOGIN</h1>
