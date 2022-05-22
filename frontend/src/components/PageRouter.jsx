@@ -9,6 +9,7 @@ import About from './pages/About'
 import Login from './pages/Login'
 import Header from "./Header";
 import Footer from "./Footer";
+import injectContext from './helpers/Context'
 import React from 'react'
 
 
@@ -41,5 +42,5 @@ function PageRouter() {
     )
 }
 
-export default PageRouter
+export default injectContext(PageRouter)
 

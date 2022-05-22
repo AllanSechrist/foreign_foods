@@ -32,7 +32,7 @@ def all_blogs():
     # return render_template('all-blogs.html', posts=posts, current_user=current_user)
 
 
-@blog.route('/<int:restaurant_id>')
+@blog.route('/<int:restaurant_id>', methods=["GET"])
 def show_blog(restaurant_id):
     requested_restaurant = Restaurant.query.get(restaurant_id)
     blog_post = requested_restaurant.blog_post
@@ -42,24 +42,37 @@ def show_blog(restaurant_id):
     # return render_template('blog.html', restaurant=requested_restaurant)
 
 
-@blog.route("/new-blog/<int:restaurant_id>", methods=["GET", "POST"])
+@blog.route("/new-blog/<int:restaurant_id>", methods=["POST"])
 @admin_only
 def add_new_post(restaurant_id):
-    form = BlogForm()
     requested_restaurant = Restaurant.query.get(restaurant_id)
-    if form.validate_on_submit():
+    if requested_restaurant:
         new_post = BlogPost(
-            title = form.title.data,
-            subtitle = form.subtitle.data,
-            body = form.body.data,
-            author = current_user,
-            restaurant = requested_restaurant,
-            date = date.today().strftime("%B %d, %Y"),
+            title = request.json.get("title", None),
+            subtitle = request.json.get("subtitle", None),
+            body = request.json.get("body", None),
+            author = request.json.get("author", None),
+            restaurant = request.json.get("restaurant", None),
+            date = request.json.get("date", None),
         )
         db.session.add(new_post)
         db.session.commit()
-        return redirect(url_for("site.restaurants"))
-    return render_template("make-blog.html", form=form, requested_restaurant=requested_restaurant, current_user=current_user)
+    else:
+        return jsonify({"msg": "Restaurant does not exsist"}), 404
+    # form = BlogForm()
+    # if form.validate_on_submit():
+    #     new_post = BlogPost(
+    #         title = form.title.data,
+    #         subtitle = form.subtitle.data,
+    #         body = form.body.data,
+    #         author = current_user,
+    #         restaurant = requested_restaurant,
+    #         date = date.today().strftime("%B %d, %Y"),
+    #     )
+    #     db.session.add(new_post)
+    #     db.session.commit()
+    #     return redirect(url_for("site.restaurants"))
+    # return render_template("make-blog.html", form=form, requested_restaurant=requested_restaurant, current_user=current_user)
 
 
 @blog.route("/edit-blog/<int:blog_id>", methods=["GET", "POST"])
