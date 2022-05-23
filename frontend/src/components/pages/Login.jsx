@@ -1,5 +1,6 @@
 import React, { useContext} from 'react'
 import { Context } from '../helpers/Context'
+import { useNavigate } from 'react-router-dom'
 import { Form, Field } from 'react-final-form'
 // import { FORM_ERROR } from 'final-form'
 
@@ -9,9 +10,13 @@ import { Form, Field } from 'react-final-form'
 
 function Login() {
     const { store, actions } = useContext(Context);
+    const navigate = useNavigate()
     const onSubmit = (values) => {
         actions.login(values.username, values.password)
     }
+
+    if(store.token && store.token !== "" && store.token !== undefined) navigate("/")
+
     return (
         <div>
             <h1>LOGIN</h1>

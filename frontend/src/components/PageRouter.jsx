@@ -1,4 +1,6 @@
+import React, {useContext} from 'react'
 import {BrowserRouter as Router, Routes, Route, Link} from 'react-router-dom'
+import { Context } from './helpers/Context'
 import Restaurants from "./pages/Restaurants"
 import Blogs from "./pages/Blogs"
 import Home from "./pages/Home"
@@ -10,11 +12,12 @@ import Login from './pages/Login'
 import Header from "./Header";
 import Footer from "./Footer";
 import injectContext from './helpers/Context'
-import React from 'react'
+
 
 
 
 function PageRouter() {
+    const { store, actions } = useContext(Context);
     return (
         <Router>
             <Header />
@@ -25,7 +28,15 @@ function PageRouter() {
                 <Link to="/new-blog">Add Blog</Link>
                 <Link to="/blog">Blogs</Link>
                 <Link to="/about">About</Link>
-                <Link to="/login">Login</Link>
+                { !store.token ? 
+                    <Link to="/login">
+                        <button>Login</button>
+                    </Link>
+                    :
+                    <button onClick={() => actions.logout()}>Logout</button>
+                }
+                
+
             </nav>
             <Routes>
                 <Route path="/" element={<Home/>} />

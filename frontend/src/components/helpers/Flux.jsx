@@ -13,15 +13,26 @@ const getState = ({ getStore, getActions, setStore }) => {
                     "password": password
                 })
                 .then(function (data) {
-                    console.log(data.data.access_token)
-                    sessionStorage.setItem("token", data.data.access_token)
-                    console.log(sessionStorage.getItem("token"))
-                    setStore({ token: data.data.access_token})
+                    const token = data.data.access_token
+                    sessionStorage.setItem("token", token)
+                    setStore({ token: token})
                 
                 })
                 .catch(function (error) {
                     console.log(error)
                 })
+            },
+
+            syncTokenFromSessionStore: () => {
+                const token = sessionStorage.getItem("token")
+                if(token && token!=="" && token!==undefined) {
+                    setStore({token: token})
+                }
+            },
+
+            logout: () => {
+                sessionStorage.removeItem("token")
+                setStore({ token: null })
             }
             
 		}
