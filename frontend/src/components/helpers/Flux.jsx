@@ -33,7 +33,29 @@ const getState = ({ getStore, getActions, setStore }) => {
             logout: () => {
                 sessionStorage.removeItem("token")
                 setStore({ token: null })
+                const data = axios.get("http://localhost:5000/logout")
+                console.log(data)
+            },
+            
+            newBlog: async (title, subtitle, body, restaurantId) => {
+                const store = getStore()
+                const opts = {
+                    headers: {
+                        "Authorizations": "Bearer " + store.token
+                    }
+                }
+                await axios.post(`http://localhost:5000/blog/new-blog/${restaurantId}`,
+                 {
+                     "title": title,
+                     "subtitle": subtitle,
+                     "body": body
+                 },
+                 opts)
+                .catch(function (error) {
+                    console.log(error)
+                })
             }
+
             
 		}
 	};

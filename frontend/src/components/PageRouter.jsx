@@ -25,7 +25,6 @@ function PageRouter() {
                 <Link to="/">Home</Link>
                 <Link to="/restaurants">Restaurants</Link>
                 <Link to="/new-restaurant">Add Restaurant</Link>
-                <Link to="/new-blog">Add Blog</Link>
                 <Link to="/blog">Blogs</Link>
                 <Link to="/about">About</Link>
                 { !store.token ? 
@@ -42,7 +41,7 @@ function PageRouter() {
                 <Route path="/" element={<Home/>} />
                 <Route path="/restaurants" element={<Restaurants/>} />
                 <Route path="/new-restaurant" element={<NewRestaurant/>}/>
-                <Route path="/new-blog" element={<NewBlog/>} />
+                <Route path="/blog/new-blog/:restaurantId" element={<NewBlog/>} />
                 <Route path="/blog" element={<Blogs />} />
                 <Route path="/blog/:blogId" element={<Blog />} />
                 <Route path="/about" element={<About />} />

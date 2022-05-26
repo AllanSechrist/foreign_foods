@@ -31,22 +31,6 @@ def admin_only(function):
     return wrapper_function
 
 
-# def format_restaurant(restaurant):
-#     return {
-#         "id": restaurant.id,
-#         "name": restaurant.name,
-#         "style": restaurant.style,
-#         "website": restaurant.website,
-#         "location": restaurant.location,
-#         "open": restaurant.open,
-#         "close": restaurant.close,
-#         "food rating": restaurant.food_rating,
-#         "price rating": restaurant.price_rating,
-#         "service rating": restaurant.service_rating,
-#         "blog_post": restaurant.blog_post
-#     }
-
-
 @site.route('/')
 def site_index():
     return render_template('index.html')
@@ -54,17 +38,16 @@ def site_index():
 
 @site.route('/restaurants', methods=["GET"])
 def restaurants():
-    # header = ['Restaurant','Style','Website','Location','Open','Close','Food','Price','Service', 'blog']
     restaurants = Restaurant.query.all()
     restaurant_schema = RestaurantSchema(many=True)
     output = restaurant_schema.dump(restaurants)
     return jsonify({'restaurant' : output})
     
 
-
 @site.route('/about')
 def about():
     return render_template('about.html')
+
 
 @site.route('/login', methods=['POST'])
 def login():
@@ -76,6 +59,7 @@ def login():
     elif not check_password_hash(user.password, password):
         return jsonify({"msg": "Password is wrong"}), 401
     else:
+        load_user(user.id)
         access_token = create_access_token(identity=email)
         return jsonify(access_token=access_token)
 
@@ -83,11 +67,12 @@ def login():
 @site.route('/logout')
 def logout():
     logout_user()
-    return redirect(url_for('site.site_index'))
+    # return redirect(url_for('site.site_index'))
+    return jsonify({"msg": "User has been logged out"})
 
 
 @site.route('/new-restaurant', methods=["GET", "POST"])
-@admin_only
+# @admin_only
 def add_restaurant():
     form = RestaurantForm()
     if form.validate_on_submit():

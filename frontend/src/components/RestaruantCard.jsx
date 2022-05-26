@@ -35,6 +35,7 @@ export default function ActionAreaCard(props) {
           alt="green iguana"
         /> */}
       </CardActionArea>
+        <a href={`/blog/new-blog/${props.id}`}>add-blog</a>
     </Card>
   );
 }

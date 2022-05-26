@@ -1,7 +1,9 @@
-from flask import render_template, redirect, Blueprint, url_for, abort, jsonify
+from flask import render_template, redirect, Blueprint, url_for, abort, jsonify, request
 from flask_login import login_user, login_required, current_user, logout_user
 from datetime import date
 from functools import wraps
+from flask_jwt_extended import jwt_required
+from flask_jwt_extended import get_jwt_identity
 
 from ..extensions import login_manager, db
 from ..models.restaurant import Restaurant
@@ -42,8 +44,8 @@ def show_blog(restaurant_id):
     # return render_template('blog.html', restaurant=requested_restaurant)
 
 
+@jwt_required
 @blog.route("/new-blog/<int:restaurant_id>", methods=["POST"])
-@admin_only
 def add_new_post(restaurant_id):
     requested_restaurant = Restaurant.query.get(restaurant_id)
     if requested_restaurant:
@@ -51,12 +53,13 @@ def add_new_post(restaurant_id):
             title = request.json.get("title", None),
             subtitle = request.json.get("subtitle", None),
             body = request.json.get("body", None),
-            author = request.json.get("author", None),
-            restaurant = request.json.get("restaurant", None),
-            date = request.json.get("date", None),
+            author = current_user,
+            restaurant = requested_restaurant,
+            date = date.today().strftime("%B %d, %Y"),
         )
         db.session.add(new_post)
         db.session.commit()
+        return jsonify({"msg": "Blog Posted!"}), 200
     else:
         return jsonify({"msg": "Restaurant does not exsist"}), 404
     # form = BlogForm()
