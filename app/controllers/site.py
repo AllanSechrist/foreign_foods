@@ -59,7 +59,6 @@ def login():
     elif not check_password_hash(user.password, password):
         return jsonify({"msg": "Password is wrong"}), 401
     else:
-        load_user(user.id)
         access_token = create_access_token(identity=email)
         return jsonify(access_token=access_token)
 

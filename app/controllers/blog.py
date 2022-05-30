@@ -44,16 +44,19 @@ def show_blog(restaurant_id):
     # return render_template('blog.html', restaurant=requested_restaurant)
 
 
-@jwt_required
+
 @blog.route("/new-blog/<int:restaurant_id>", methods=["POST"])
+@jwt_required()
 def add_new_post(restaurant_id):
     requested_restaurant = Restaurant.query.get(restaurant_id)
+    email = get_jwt_identity()
+    user = User.query.filter_by(email=email).first()
     if requested_restaurant:
         new_post = BlogPost(
             title = request.json.get("title", None),
             subtitle = request.json.get("subtitle", None),
             body = request.json.get("body", None),
-            author = current_user,
+            author = user,
             restaurant = requested_restaurant,
             date = date.today().strftime("%B %d, %Y"),
         )

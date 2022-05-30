@@ -41,7 +41,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 const store = getStore()
                 const opts = {
                     headers: {
-                        "Authorizations": "Bearer " + store.token
+                        "Authorization": "Bearer " + store.token
                     }
                 }
                 await axios.post(`http://localhost:5000/blog/new-blog/${restaurantId}`,
