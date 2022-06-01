@@ -11,6 +11,7 @@ function BlogCard(props) {
             <h3>{props.subtitle}</h3>
             <p>{props.date}</p>
             <p dangerouslySetInnerHTML={createMarkup(props.body)} />
+
         </div>
     )
 }

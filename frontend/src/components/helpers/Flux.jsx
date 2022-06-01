@@ -54,6 +54,41 @@ const getState = ({ getStore, getActions, setStore }) => {
                 .catch(function (error) {
                     console.log(error)
                 })
+            },
+
+            newRestaurant: async (
+                restaurantName,
+                style,
+                website,
+                location,
+                openTime,
+                closeTime,
+                foodRating,
+                priceRating,
+                serviceRating
+            ) => {
+                const store = getStore()
+                const opts = {
+                    headers : {
+                        "Authorization": "Bearer " + store.token
+                    }
+                }
+                await axios.post(`http://localhost:5000/new-restaurant`,
+                {
+                    "name": restaurantName,
+                    "style": style,
+                    "website": website,
+                    "location": location,
+                    "open": openTime,
+                    "close": closeTime,
+                    "food_rating": foodRating,
+                    "price_rating": priceRating,
+                    "service_rating": serviceRating,
+                },
+                opts)
+                .catch(function (error){
+                    console.log(error)
+                })
             }
 
             

@@ -3,7 +3,9 @@ import axios from 'axios'
 import { useParams } from "react-router-dom"
 import BlogCard from '../BlogCard'
 
+
 function Blog() {
+  
     // let navigate = useNavigate()
     let { blogId } = useParams()
 
@@ -13,7 +15,10 @@ function Blog() {
     const data = await axios.get(`http://localhost:5000/blog/${blogId}`)
     const { blog } = data.data
     setBlogToShow(blog)
-    console.log(blog)
+    // console.log(blog)
+  }
+  const deleteBlog = async () => {
+    await axios.post(`http://localhost:5000/blog/delete-blog/${blogId}`)
   }
 
   useEffect(() => {
@@ -35,7 +40,7 @@ function Blog() {
               )
             })}
             
-            
+            <a href={`/blog/delete-blog/${blogId}`}>delete-blog</a>
            
         </div>
     )

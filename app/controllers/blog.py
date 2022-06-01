@@ -65,24 +65,10 @@ def add_new_post(restaurant_id):
         return jsonify({"msg": "Blog Posted!"}), 200
     else:
         return jsonify({"msg": "Restaurant does not exsist"}), 404
-    # form = BlogForm()
-    # if form.validate_on_submit():
-    #     new_post = BlogPost(
-    #         title = form.title.data,
-    #         subtitle = form.subtitle.data,
-    #         body = form.body.data,
-    #         author = current_user,
-    #         restaurant = requested_restaurant,
-    #         date = date.today().strftime("%B %d, %Y"),
-    #     )
-    #     db.session.add(new_post)
-    #     db.session.commit()
-    #     return redirect(url_for("site.restaurants"))
-    # return render_template("make-blog.html", form=form, requested_restaurant=requested_restaurant, current_user=current_user)
 
 
 @blog.route("/edit-blog/<int:blog_id>", methods=["GET", "POST"])
-@admin_only
+@jwt_required()
 def edit_blog(blog_id):
     blog = BlogPost.query.get(blog_id)
     edit_form = BlogForm(
@@ -118,10 +104,10 @@ def edit_blog(blog_id):
 #     )
 
 
-@blog.route('/delete-blog/<int:blog_id>', methods=["GET", "POST"])
-@admin_only
+@blog.route('/delete-blog/<int:blog_id>', methods=["POST"])
+@jwt_required()
 def delete_blog(blog_id):
     blog_to_delete = BlogPost.query.get(blog_id)
     db.session.delete(blog_to_delete)
     db.session.commit()
-    return redirect(url_for('blog.all_blogs'))
+    return jsonify({"msg": "Blog Deleted!"}), 200

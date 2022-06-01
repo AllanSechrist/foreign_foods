@@ -71,23 +71,37 @@ def logout():
 
 
 @site.route('/new-restaurant', methods=["GET", "POST"])
-# @admin_only
+@jwt_required()
 def add_restaurant():
-    form = RestaurantForm()
-    if form.validate_on_submit():
-        new_restaurant = Restaurant(
-            name = form.name.data,
-            style = form.style.data,
-            website = form.website.data,
-            location = form.location.data,
-            open = (form.open_hour.data + ':' + form.open_mins.data + form.open_am_pm.data),
-            close = (form.close_hour.data + ':' + form.close_mins.data + form.close_am_pm.data),
-            food_rating = form.food_rating.data,
-            price_rating = form.price.data,
-            service_rating = form.service.data
+    new_restaurant = Restaurant(
+        name = request.json.get("name", None),
+        style = request.json.get("style", None),
+        website = request.json.get("website", None),
+        location = request.json.get("location", None),
+        open = request.json.get("open", None),
+        close = request.json.get("close", None),
+        food_rating = request.json.get("food_rating", None),
+        price_rating = request.json.get("price_rating", None),
+        service_rating = request.json.get("service_rating", None),
         )
-        db.session.add(new_restaurant)
-        db.session.commit()
-        return redirect(url_for('site.site_index'))
-    return render_template('add.html', form=form, current_user=current_user)
+    db.session.add(new_restaurant)
+    db.session.commit()
+    return jsonify({"msg": "Restaurant Created!"}), 200
+    # form = RestaurantForm()
+    # if form.validate_on_submit():
+    #     new_restaurant = Restaurant(
+    #         name = form.name.data,
+    #         style = form.style.data,
+    #         website = form.website.data,
+    #         location = form.location.data,
+    #         open = (form.open_hour.data + ':' + form.open_mins.data + form.open_am_pm.data),
+    #         close = (form.close_hour.data + ':' + form.close_mins.data + form.close_am_pm.data),
+    #         food_rating = form.food_rating.data,
+    #         price_rating = form.price.data,
+    #         service_rating = form.service.data
+    #     )
+    #     db.session.add(new_restaurant)
+    #     db.session.commit()
+    #     return redirect(url_for('site.site_index'))
+    # return render_template('add.html', form=form, current_user=current_user)
         

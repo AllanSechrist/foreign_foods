@@ -1,13 +1,14 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Form, Field} from 'react-final-form'
+import { Context } from '../helpers/Context'
 
 
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
+// const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
-const onSubmit = async values => {
-    await sleep(300)
-    window.alert(JSON.stringify(values, 0, 2))
-}
+// const onSubmit = async values => {
+//     await sleep(300)
+//     window.alert(JSON.stringify(values, 0, 2))
+// }
 
 const hours = Array.from(new Array(12), (x ,i) => i + 1)
 const ampm = ["AM", "PM"]
@@ -18,6 +19,23 @@ const service = [('👍'), ('👍👍'), ('👍👍👍'), ('👍👍👍👍'),
 
 
 function NewRestaurant() {
+    const { actions } = useContext(Context)
+    const onSubmit = (values) => {
+        console.log("CLICKED")
+        const openTime = `${values.openHour.toString()}:${values.openMinutes.toString()} ${values.openAmpm}`
+        const closeTime = `${values.closeHour.toString()}:${values.closeMinutes.toString()} ${values.closeAmpm}`
+        actions.newRestaurant(
+            values.restaurantname,
+            values.style, 
+            values.website, 
+            values.location,
+            openTime,
+            closeTime,
+            values.food_rating,
+            values.price,
+            values.service
+            )
+    }
     return (
         <div>
             <h1>Add new restaurant</h1>
@@ -79,17 +97,18 @@ function NewRestaurant() {
                         </Field>
                         <div>
                             <label>Open Hour</label>
-                            <Field name="open" component="select">
-                                    <option />
-                                    {hours.map((hour) => {
-                                        return(
-                                            <option value={hour}>{hour}</option>
-                                        )
-                                    })}
+                            <Field name="openHour" component="select">
+                                <option value="">N/A</option>
+                                {hours.map((hour) => {
+                                    return(
+                                        <option value={hour}>{hour}</option>
+                                    )
+                                })}
+                                   
                             </Field>
                             <label>Minutes</label>
-                            <Field name="minutes" component="select">
-                                <option />
+                            <Field name="openMinutes" component="select">
+                                <option value="">N/A</option>
                                 {minutes.map((minute) => {
                                     return(
                                         <option value={minute}>{minute}</option>
@@ -97,8 +116,38 @@ function NewRestaurant() {
                                 })}
                             </Field>
                             <label>AMPM</label>
-                            <Field name="ampm" component="select">
-                                <option />
+                            <Field name="openAmpm" component="select">
+                                <option value="">N/A</option>
+                                {ampm.map((option) => {
+                                    return (
+                                        <option value={option}>{option}</option>
+                                    )
+                                })}
+                            </Field>
+                        </div>
+                        <div>
+                            <label>Close Hour</label>
+                            <Field name="closeHour" component="select">
+                                    <option value="">N/A</option>
+                                    {hours.map((hour) => {
+                                        return(
+                                            <option value={hour}>{hour}</option>
+                                        )
+                                    })}
+                                   
+                            </Field>
+                            <label>Minutes</label>
+                            <Field name="closeMinutes" component="select">
+                                <option value="">N/A</option>
+                                {minutes.map((minute) => {
+                                    return(
+                                        <option value={minute}>{minute}</option>
+                                    )
+                                })}
+                            </Field>
+                            <label>AMPM</label>
+                            <Field name="closeAmpm" component="select">
+                                <option value="">N/A</option>
                                 {ampm.map((option) => {
                                     return (
                                         <option value={option}>{option}</option>
@@ -108,8 +157,8 @@ function NewRestaurant() {
                         </div>
                         <div>
                             <label>Food Rating</label>
-                            <Field name="food rating" component="select">
-                                <option />
+                            <Field name="food_rating" component="select">
+                                <option value="">N/A</option>
                                 {foodRating.map((rating) => {
                                     return (
                                         <option value={rating}>{rating}</option>
@@ -120,7 +169,7 @@ function NewRestaurant() {
                         <div>
                             <label>Price</label>
                             <Field name="price" component="select">
-                                <option />
+                                <option value="">N/A</option>
                                 {price.map((rating) => {
                                     return (
                                         <option value={rating}>{rating}</option>
@@ -131,7 +180,7 @@ function NewRestaurant() {
                         <div>
                             <label>Service</label>
                             <Field name="service" component="select">
-                                <option />
+                                <option value="">N/A</option>
                                 {service.map((rating) => {
                                     return (
                                         <option value={rating}>{rating}</option>
@@ -141,7 +190,7 @@ function NewRestaurant() {
                         </div>
                         
                         <button type="submit">
-                                Submit
+                            Submit
                         </button>
                         <button 
                             type="button"
