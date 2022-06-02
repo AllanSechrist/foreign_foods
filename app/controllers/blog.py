@@ -67,30 +67,52 @@ def add_new_post(restaurant_id):
         return jsonify({"msg": "Restaurant does not exsist"}), 404
 
 
-@blog.route("/edit-blog/<int:blog_id>", methods=["GET", "POST"])
-@jwt_required()
+@blog.route("/edit-blog/<int:blog_id>", methods=["GET", "PUT"])
+# @jwt_required()
 def edit_blog(blog_id):
     blog = BlogPost.query.get(blog_id)
-    edit_form = BlogForm(
-        title = blog.title,
-        subtitle = blog.subtitle,
-        author = blog.author,
-        body = blog.body
-    )
-    if edit_form.validate_on_submit():
-        blog.title = edit_form.title.data
-        blog.subtitle = edit_form.subtitle.data
-        blog.body = edit_form.body.data
+    blog_schema = None
+    output = None
+
+    if blog:
+        blog_schema = BlogPostSchema()
+        output = blog_schema.dump(blog)
+    else:
+        return jsonify({"msg": "Blog does not exsist!"}), 401
+    
+    if request.method == "PUT":
+        
+        blog.title = request.json.get("title", None),
+        blog.subtitle = request.json.get("subtitle", None),
+        blog.body = request.json.get("body", None)
         db.session.commit()
-        return redirect(url_for("blog.show_blog", restaurant_id=blog.restaurant_id))
+        
+        return jsonify({"msg": "Blog has been edited!"}), 200
+    elif request.method == "GET":
+        return jsonify({"blog": output})
+    # edit_form = BlogForm(
+    #     title = blog.title,
+    #     subtitle = blog.subtitle,
+    #     author = blog.author,
+    #     body = blog.body
+    # )
+    # if edit_form.validate_on_submit():
+    #     blog.title = edit_form.title.data
+    #     blog.subtitle = edit_form.subtitle.data
+    #     blog.body = edit_form.body.data
+    #     db.session.commit()
+    #     return redirect(url_for("blog.show_blog", restaurant_id=blog.restaurant_id))
 
-    return render_template("make-blog.html", form=edit_form, current_user=current_user)
+    # return render_template("make-blog.html", form=edit_form, current_user=current_user)
 
 
-@blog.route('/delete-blog/<int:blog_id>', methods=["POST"])
-@jwt_required()
+@blog.route('/delete-blog/<int:blog_id>', methods=["DELETE"])
+# @jwt_required()
 def delete_blog(blog_id):
     blog_to_delete = BlogPost.query.get(blog_id)
-    db.session.delete(blog_to_delete)
-    db.session.commit()
-    return jsonify({"msg": "Blog Deleted!"}), 200
+    if not blog_to_delete:
+        return jsonify({"msg": "Blog does not exist"}), 401
+    else:
+        db.session.delete(blog_to_delete)
+        db.session.commit()
+        return jsonify({"msg": "Blog Deleted!"}), 200

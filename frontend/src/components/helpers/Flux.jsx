@@ -97,10 +97,19 @@ const getState = ({ getStore, getActions, setStore }) => {
                         "Authorization": "Bearer " + store.token
                     }
                 }
-                await axios.post(`http://localhost:5000/blog/delete-blog/${blogId}`,{}, opts)
+                await axios.delete(`http://localhost:5000/blog/delete-blog/${blogId}`,{opts})
                 .catch(function (error) {
                     console.log(error)
                 })
+            },
+            editBlog: async (blogId) => {
+                const store = getStore()
+                const opts = {
+                    headers : {
+                        "Authorization": "Bearer " + store.token
+                    }
+                }
+                const data = await axios.get(`http://localhost:5000/blog/edit-blog${blogId}`)
             }
 
             
