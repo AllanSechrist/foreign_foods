@@ -1,4 +1,5 @@
-import React, { useState, useEffect} from 'react'
+import React, { useState, useEffect, useContext} from 'react'
+import { Context } from '../helpers/Context'
 import axios from 'axios'
 import { useParams } from "react-router-dom"
 import BlogCard from '../BlogCard'
@@ -7,6 +8,7 @@ import BlogCard from '../BlogCard'
 function Blog() {
   
     // let navigate = useNavigate()
+    const { actions } = useContext(Context)
     let { blogId } = useParams()
 
     const [blogToShow, setBlogToShow] = useState([])
@@ -16,9 +18,6 @@ function Blog() {
     const { blog } = data.data
     setBlogToShow(blog)
     // console.log(blog)
-  }
-  const deleteBlog = async () => {
-    await axios.post(`http://localhost:5000/blog/delete-blog/${blogId}`)
   }
 
   useEffect(() => {
@@ -39,8 +38,7 @@ function Blog() {
               />
               )
             })}
-            
-            <a href={`/blog/delete-blog/${blogId}`}>delete-blog</a>
+            <button onClick={() => {actions.deleteBlog(blogId)}}>Delete Blog</button>
            
         </div>
     )

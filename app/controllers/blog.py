@@ -87,23 +87,6 @@ def edit_blog(blog_id):
     return render_template("make-blog.html", form=edit_form, current_user=current_user)
 
 
-# @blog.route("/edit-restaurant/<int:restaurant_id>", methods=['GET', 'POST'])
-# @admin_only
-# def edit_restaurant(restaurant_id):
-#     restaurant = Restaurant.query.get(restaurant_id)
-#     edit_form = RestaurantForm(
-#         name = restaurant.name,
-#         style = restaurant.style,
-#         website = restaurant.website,
-#         location  = restaurant.location,
-#         open_hour = restaurant.open,
-#         close = restaurant.close,
-#         food_rating = restaurant.food_rating,
-#         price_rating = restaurant.price_rating,
-#         service_rating = restaurant.service_rating,
-#     )
-
-
 @blog.route('/delete-blog/<int:blog_id>', methods=["POST"])
 @jwt_required()
 def delete_blog(blog_id):
