@@ -3,7 +3,9 @@ import axios from "axios"
 import BlogCard from '../BlogCard'
 
 function Blogs() {
+ 
   const [blogList, setBlogList] = useState([])
+
 
   const fetchBlogs = async () => {
     const data = await axios.get("http://localhost:5000/blog")

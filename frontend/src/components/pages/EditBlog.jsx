@@ -1,20 +1,35 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { Context } from '../helpers/Context'
 import {Form, Field} from 'react-final-form'
 import { useParams } from 'react-router-dom'
+import axios from 'axios'
 
 
-function NewBlog() {
+function EditBlog() {
     const { actions } = useContext(Context)
-    let { restaurantId } = useParams()
+    let { blogId } = useParams()
+
+    const [blogToEdit, setBlogToEdit] = useState()
+    const fetchBlog = async () => {
+        const data = await axios.get(`http://localhost:5000/blog/edit-blog/${blogId}`)
+        const { blog } = data.data
+        setBlogToEdit(blog)
+        console.log(blogToEdit)
+    }
+
+    useEffect(() => {
+        fetchBlog()
+    }, [])
+
     const onSubmit = (values) => {
-        actions.newBlog(values.title, values.subtitle, values.body, restaurantId)
+        actions.editBlog(values.title, values.subtitle, values.body, blogId)
     }
     return (
         <div>
-            <h1>Add new blog</h1>
+            <h1>Edit Blog</h1>
             <Form 
                 onSubmit={onSubmit}
+                initialValues={{title: blogToEdit.title, subtitle: blogToEdit.subtitle, body: blogToEdit.body}}
                 validate = {values => {
                     const errors = {}
                     if(!values.title) {
@@ -75,4 +90,4 @@ function NewBlog() {
     )
 }
 
-export default NewBlog
+export default EditBlog

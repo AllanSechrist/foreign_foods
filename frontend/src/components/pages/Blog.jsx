@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext} from 'react'
 import { Context } from '../helpers/Context'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 import { useParams } from "react-router-dom"
 import BlogCard from '../BlogCard'
 
@@ -11,13 +12,13 @@ function Blog() {
     const { actions } = useContext(Context)
     let { blogId } = useParams()
 
+    const navigate = useNavigate()
     const [blogToShow, setBlogToShow] = useState([])
-
     const fetchBlogs = async () => {
-    const data = await axios.get(`http://localhost:5000/blog/${blogId}`)
-    const { blog } = data.data
-    setBlogToShow(blog)
-    // console.log(blog)
+      const data = await axios.get(`http://localhost:5000/blog/${blogId}`)
+      const { blog } = data.data
+      setBlogToShow(blog)
+    
   }
 
   useEffect(() => {
@@ -26,7 +27,7 @@ function Blog() {
 
     return (
         <div>
-            Hey! Its blog number { blogId }
+            {/* Hey! Its blog number { blogId } */}
             {blogToShow.map((blog) => {
               return (
               <BlogCard 
@@ -38,7 +39,10 @@ function Blog() {
               />
               )
             })}
+            
             <button onClick={() => {actions.deleteBlog(blogId)}}>Delete Blog</button>
+            <button onClick={() => {navigate(`/blog/edit-blog/${blogId}`)}}>Edit Blog</button>
+           
            
         </div>
     )
