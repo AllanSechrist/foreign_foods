@@ -5,9 +5,9 @@ function NewBlog() {
     return (
         <BlogForm 
             isEdit={false}
-            title="Test"
-            subtitle="Test"
-            body="Test"
+            title=""
+            subtitle=""
+            body=""
         />    
     )
 }

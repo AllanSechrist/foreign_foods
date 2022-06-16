@@ -67,7 +67,7 @@ def add_new_post(restaurant_id):
         return jsonify({"msg": "Restaurant does not exsist"}), 404
 
 
-@blog.route("/edit-blog/<int:blog_id>", methods=["GET", "PUT"])
+@blog.route("/edit-blog/<int:blog_id>", methods=["PUT"])
 # @jwt_required()
 def edit_blog(blog_id):
     blog = BlogPost.query.get(blog_id)
@@ -79,17 +79,15 @@ def edit_blog(blog_id):
         output = blog_schema.dump(blog)
     else:
         return jsonify({"msg": "Blog does not exsist!"}), 401
-    
-    if request.method == "PUT":
         
-        blog.title = request.json.get("title", None),
-        blog.subtitle = request.json.get("subtitle", None),
-        blog.body = request.json.get("body", None)
-        db.session.commit()
+    blog.title = request.json.get("title", None),
+    blog.subtitle = request.json.get("subtitle", None),
+    blog.body = request.json.get("body", None)
+    db.session.commit()
         
         return jsonify({"msg": "Blog has been edited!"}), 200
-    elif request.method == "GET":
-        return jsonify({"blog": output})
+    # elif request.method == "GET":
+    #     return jsonify({"blog": output})
     # edit_form = BlogForm(
     #     title = blog.title,
     #     subtitle = blog.subtitle,

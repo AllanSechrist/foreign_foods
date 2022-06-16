@@ -4,6 +4,7 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { useParams } from "react-router-dom"
 import BlogCard from '../BlogCard'
+import EditBlog from './EditBlog'
 
 
 function Blog() {
@@ -44,12 +45,26 @@ function Blog() {
           })}
           
           <button onClick={() => {actions.deleteBlog(blogId)}}>Delete Blog</button>
-          <button onClick={() => {navigate(`/blog/edit-blog/${blogId}`)}}>Edit Blog</button>
+          <button onClick={() => {setEditMode(true)}}>Edit Blog</button>
          
          
       </div>
     )
   } else {
+    return (
+      <div>
+        {blogToShow.map((blog) => {
+          return (
+            <EditBlog 
+              key={blog.id}
+              title={blog.title}
+              subtitle={blog.subtitle}
+              body={blog.body}
+            />
+          )
+        })}
+      </div>
+    )
     
   }
    
