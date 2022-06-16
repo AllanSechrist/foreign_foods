@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import BlogForm from '../BlogForm'
-import { useParams } from 'react-router-dom'
-import axios from 'axios'
+
 
 
 function EditBlog() {
