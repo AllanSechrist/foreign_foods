@@ -2,7 +2,7 @@ from flask import Flask
 from flask_cors import CORS
 
 
-from .extensions import db, ma, bootstrap, ckeditor, login_manager, jwt
+from .extensions import db, ma, ckeditor, jwt
 
 
 
@@ -14,10 +14,10 @@ def create_app(config_file="settings.py"):
 
     app.config.from_pyfile(config_file)
 
-    bootstrap.init_app(app)
+    # bootstrap.init_app(app)
     db.init_app(app)
     ma.init_app(app)
-    login_manager.init_app(app)
+    # login_manager.init_app(app)
     ckeditor.init_app(app)
     jwt.init_app(app)
     CORS(app)

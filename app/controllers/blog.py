@@ -1,11 +1,11 @@
 from flask import render_template, redirect, Blueprint, url_for, abort, jsonify, request
-from flask_login import login_user, login_required, current_user, logout_user
+# from flask_login import login_user, login_required, current_user, logout_user
 from datetime import date
 from functools import wraps
 from flask_jwt_extended import jwt_required
 from flask_jwt_extended import get_jwt_identity
 
-from ..extensions import login_manager, db
+from ..extensions import db
 from ..models.restaurant import Restaurant
 from ..models.user import User
 from ..models.blog_post import BlogPost
@@ -16,13 +16,13 @@ from ..models.schemas import BlogPostSchema, UserSchema, RestaurantSchema
 blog = Blueprint('blog', __name__, url_prefix='/blog', template_folder='templates')
 
 
-def admin_only(function):
-    @wraps(function)
-    def wrapper_function(*args, **kwargs):
-        if not current_user.is_authenticated or current_user.id !=1:
-            return abort(403)
-        return function(*args, **kwargs)
-    return wrapper_function
+# def admin_only(function):
+#     @wraps(function)
+#     def wrapper_function(*args, **kwargs):
+#         if not current_user.is_authenticated or current_user.id !=1:
+#             return abort(403)
+#         return function(*args, **kwargs)
+#     return wrapper_function
 
 
 @blog.route('/')
@@ -67,7 +67,7 @@ def add_new_post(restaurant_id):
         return jsonify({"msg": "Restaurant does not exsist"}), 404
 
 
-@blog.route("/edit-blog/<int:blog_id>", methods=["PUT"])
+@blog.route("/edit-blog/<int:blog_id>", methods=["PATCH"])
 # @jwt_required()
 def edit_blog(blog_id):
     blog = BlogPost.query.get(blog_id)
@@ -85,7 +85,7 @@ def edit_blog(blog_id):
     blog.body = request.json.get("body", None)
     db.session.commit()
         
-        return jsonify({"msg": "Blog has been edited!"}), 200
+    return jsonify({"msg": "Blog has been edited!"}), 200
     # elif request.method == "GET":
     #     return jsonify({"blog": output})
     # edit_form = BlogForm(
@@ -105,7 +105,7 @@ def edit_blog(blog_id):
 
 
 @blog.route('/delete-blog/<int:blog_id>', methods=["DELETE"])
-# @jwt_required()
+@jwt_required()
 def delete_blog(blog_id):
     blog_to_delete = BlogPost.query.get(blog_id)
     if not blog_to_delete:

@@ -114,7 +114,10 @@ const getState = ({ getStore, getActions, setStore }) => {
                         "Authorization": "Bearer " + store.token
                     }
                 }
-                await axios.put(`http://localhost:5000/blog/edit-blog${blogId}`, {opts})
+                await axios.patch(`http://localhost:5000/blog/edit-blog/${blogId}`, {opts})
+                .catch(function (error) {
+                    console.log(error)
+                })
             }
 
             
