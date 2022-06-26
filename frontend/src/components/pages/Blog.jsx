@@ -11,14 +11,14 @@ function Blog() {
   
     // let navigate = useNavigate()
     const { actions } = useContext(Context)
-    let { blogId } = useParams()
+    let { restaurantId } = useParams()
 
     const navigate = useNavigate()
     const [isEditMode, setEditMode] = useState(false)
     const [blogToShow, setBlogToShow] = useState([])
 
     const fetchBlogs = async () => {
-      const data = await axios.get(`http://localhost:5000/blog/${blogId}`)
+      const data = await axios.get(`http://localhost:5000/blog/${restaurantId}`)
       const { blog } = data.data
       setBlogToShow(blog)
     
@@ -31,11 +31,12 @@ function Blog() {
   if (!isEditMode) {
     return (
       <div>
-          {/* Hey! Its blog number { blogId } */}
+          {/* Hey! Its blog number { blogToShow.id } */}
           {blogToShow.map((blog) => {
             return (
             <BlogCard 
               key={blog.id}
+              id={blog.id}
               title={blog.title}
               subtitle={blog.subtitle}
               date={blog.date}
@@ -44,7 +45,7 @@ function Blog() {
             )
           })}
           
-          <button onClick={() => {actions.deleteBlog(blogId)}}>Delete Blog</button>
+          {/* <button onClick={() => {actions.deleteBlog(null)}}>Delete Blog</button> */}
           <button onClick={() => {setEditMode(true)}}>Edit Blog</button>
          
          
@@ -57,6 +58,7 @@ function Blog() {
           return (
             <EditBlog 
               key={blog.id}
+              id={blog.id}
               title={blog.title}
               subtitle={blog.subtitle}
               body={blog.body}

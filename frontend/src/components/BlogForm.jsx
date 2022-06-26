@@ -7,11 +7,12 @@ import { useParams } from 'react-router-dom'
 function BlogForm(props) {
     const { actions } = useContext(Context)
     let { restaurantId } = useParams()
+    let { blogId } = useParams()
     const onSubmit = (values) => {
         if (!props.isEdit) {
             actions.newBlog(values.title, values.subtitle, values.body, restaurantId)
         } else {
-            console.log("Hello, this is Edit")
+            actions.editBlog(values.title, values.subtitle, values.body, blogId)
         }
         
     }

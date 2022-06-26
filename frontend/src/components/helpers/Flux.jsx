@@ -102,19 +102,25 @@ const getState = ({ getStore, getActions, setStore }) => {
                         "Authorization": "Bearer " + store.token
                     }
                 }
-                await axios.delete(`http://localhost:5000/blog/delete-blog/${blogId}`,{opts})
+                await axios.delete(`http://localhost:5000/blog/delete-blog/${blogId}`)
                 .catch(function (error) {
                     console.log(error)
                 })
             },
-            editBlog: async (blogId) => {
+            editBlog: async (title, subtitle, body, blogId) => {
                 const store = getStore()
                 const opts = {
                     headers : {
                         "Authorization": "Bearer " + store.token
                     }
                 }
-                await axios.patch(`http://localhost:5000/blog/edit-blog/${blogId}`, {opts})
+                await axios.patch(`http://localhost:5000/blog/edit-blog/${blogId}`, 
+                {
+                    "title": title,
+                    "subtitle": subtitle,
+                    "body": body
+                }, 
+                opts)
                 .catch(function (error) {
                     console.log(error)
                 })

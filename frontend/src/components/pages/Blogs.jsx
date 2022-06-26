@@ -32,7 +32,6 @@ function Blogs() {
                     />
                 )
             })}
-            
         </div>
     )
 }

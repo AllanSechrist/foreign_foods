@@ -5,7 +5,6 @@ import Restaurants from "./pages/Restaurants"
 import Blogs from "./pages/Blogs"
 import Home from "./pages/Home"
 import Blog from "./pages/Blog"
-import EditBlog from "./pages/EditBlog"
 import NewRestaurant from './pages/NewRestaurant'
 import NewBlog from './pages/NewBlog'
 import About from './pages/About'
@@ -44,7 +43,7 @@ function PageRouter() {
                 <Route path="/new-restaurant" element={<NewRestaurant/>}/>
                 <Route path="/blog/new-blog/:restaurantId" element={<NewBlog/>} />
                 <Route path="/blog" element={<Blogs />} />
-                <Route path="/blog/:blogId" element={<Blog />} />
+                <Route path="/blog/:restaurantId" element={<Blog />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/login" element={<Login />} />
             </Routes>

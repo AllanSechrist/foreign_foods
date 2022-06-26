@@ -105,12 +105,12 @@ def edit_blog(blog_id):
 
 
 @blog.route('/delete-blog/<int:blog_id>', methods=["DELETE"])
-@jwt_required()
+# @jwt_required()
 def delete_blog(blog_id):
     blog_to_delete = BlogPost.query.get(blog_id)
-    if not blog_to_delete:
-        return jsonify({"msg": "Blog does not exist"}), 401
-    else:
+    if blog_to_delete:
         db.session.delete(blog_to_delete)
         db.session.commit()
         return jsonify({"msg": "Blog Deleted!"}), 200
+    else:
+        return jsonify({"msg": "Blog does not exist"}), 404
