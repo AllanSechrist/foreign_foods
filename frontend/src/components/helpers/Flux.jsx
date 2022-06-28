@@ -119,8 +119,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     "title": title,
                     "subtitle": subtitle,
                     "body": body
-                }, 
-                opts)
+                }, opts)
                 .catch(function (error) {
                     console.log(error)
                 })

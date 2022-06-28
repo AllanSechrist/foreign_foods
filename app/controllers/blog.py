@@ -70,20 +70,17 @@ def add_new_post(restaurant_id):
 @blog.route("/edit-blog/<int:blog_id>", methods=["PATCH"])
 # @jwt_required()
 def edit_blog(blog_id):
-    blog = BlogPost.query.get(blog_id)
-    blog_schema = None
-    output = None
+    blog_to_update = BlogPost.query.get(blog_id)
 
-    if blog:
-        blog_schema = BlogPostSchema()
-        output = blog_schema.dump(blog)
+    if blog_to_update:
+        blog_to_update.title = request.json.get("title", None)
+        blog_to_update.subtitle = request.json.get("subtitle", None)
+        blog_to_update.body = request.json.get("body", None)
+        db.session.commit()
     else:
         return jsonify({"msg": "Blog does not exsist!"}), 401
         
-    blog.title = request.json.get("title", None),
-    blog.subtitle = request.json.get("subtitle", None),
-    blog.body = request.json.get("body", None)
-    db.session.commit()
+    
         
     return jsonify({"msg": "Blog has been edited!"}), 200
     # elif request.method == "GET":

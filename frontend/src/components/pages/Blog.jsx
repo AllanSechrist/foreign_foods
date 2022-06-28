@@ -46,7 +46,7 @@ function Blog() {
           })}
           
           {/* <button onClick={() => {actions.deleteBlog(null)}}>Delete Blog</button> */}
-          <button onClick={() => {setEditMode(true)}}>Edit Blog</button>
+          {/* <button onClick={() => {setEditMode(true)}}>Edit Blog</button> */}
          
          
       </div>
