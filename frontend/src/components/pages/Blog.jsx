@@ -27,7 +27,11 @@ function Blog() {
   useEffect(() => {
     fetchBlogs()
   }, [])
-
+  if (blogToShow.length < 1) {
+    return (
+      <h1>Blog Coming Soon!</h1>
+    )
+  }
   if (!isEditMode) {
     return (
       <div>

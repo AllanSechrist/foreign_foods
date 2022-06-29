@@ -11,29 +11,28 @@ function Blogs() {
     const data = await axios.get("http://localhost:5000/blog")
     const {blog} = data.data
     setBlogList(blog)
-    console.log(blog)
   }
 
   useEffect(() => {
     fetchBlogs()
   }, [])
-
     return (
-        <div>
-            {blogList.map((blog) => {
-                return(
-                    <BlogCard 
-                        key={blog.id}
-                        id={blog.id}
-                        title={blog.title}
-                        subtitle={blog.subtitle}
-                        date={blog.date}
-                        body={blog.body}
-                    />
-                )
-            })}
-        </div>
+      <div>
+          {blogList.map((blog) => {
+              return(
+                  <BlogCard 
+                      key={blog.id}
+                      id={blog.id}
+                      title={blog.title}
+                      subtitle={blog.subtitle}
+                      date={blog.date}
+                      body={blog.body}
+                  />
+              )
+          })}
+      </div>
     )
-}
+  }
+
 
 export default Blogs

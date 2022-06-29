@@ -1,11 +1,12 @@
 import React, { useContext } from 'react'
 import { Context } from './helpers/Context'
 import {Form, Field} from 'react-final-form'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 
 
 function BlogForm(props) {
     const { actions } = useContext(Context)
+    const navigate = useNavigate()
     let { restaurantId } = useParams()
     const onSubmit = (values) => {
         if (!props.isEdit) {
@@ -13,7 +14,7 @@ function BlogForm(props) {
         } else {
             actions.editBlog(values.title, values.subtitle, values.body, props.blogId)
         }
-        
+        navigate(`/restaurants`)
     }
     return (
         <div>
