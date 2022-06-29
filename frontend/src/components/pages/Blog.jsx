@@ -1,20 +1,12 @@
-import React, { useState, useEffect, useContext} from 'react'
-import { Context } from '../helpers/Context'
+import React, { useState, useEffect} from 'react'
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
 import { useParams } from "react-router-dom"
 import BlogCard from '../BlogCard'
-import EditBlog from './EditBlog'
 
 
 function Blog() {
-  
-    // let navigate = useNavigate()
-    const { actions } = useContext(Context)
-    let { restaurantId } = useParams()
 
-    const navigate = useNavigate()
-    const [isEditMode, setEditMode] = useState(false)
+    let { restaurantId } = useParams()
     const [blogToShow, setBlogToShow] = useState([])
 
     const fetchBlogs = async () => {
@@ -32,47 +24,30 @@ function Blog() {
       <h1>Blog Coming Soon!</h1>
     )
   }
-  if (!isEditMode) {
-    return (
-      <div>
-          {/* Hey! Its blog number { blogToShow.id } */}
-          {blogToShow.map((blog) => {
-            return (
-            <BlogCard 
-              key={blog.id}
-              id={blog.id}
-              title={blog.title}
-              subtitle={blog.subtitle}
-              date={blog.date}
-              body={blog.body}
-            />
-            )
-          })}
-          
-          {/* <button onClick={() => {actions.deleteBlog(null)}}>Delete Blog</button> */}
-          {/* <button onClick={() => {setEditMode(true)}}>Edit Blog</button> */}
-         
-         
-      </div>
-    )
-  } else {
-    return (
-      <div>
+  
+  return (
+    <div>
+        {/* Hey! Its blog number { blogToShow.id } */}
         {blogToShow.map((blog) => {
           return (
-            <EditBlog 
-              key={blog.id}
-              id={blog.id}
-              title={blog.title}
-              subtitle={blog.subtitle}
-              body={blog.body}
-            />
+          <BlogCard 
+            key={blog.id}
+            id={blog.id}
+            title={blog.title}
+            subtitle={blog.subtitle}
+            date={blog.date}
+            body={blog.body}
+          />
           )
         })}
-      </div>
-    )
-    
-  }
+        
+        {/* <button onClick={() => {actions.deleteBlog(null)}}>Delete Blog</button> */}
+        {/* <button onClick={() => {setEditMode(true)}}>Edit Blog</button> */}
+       
+       
+    </div>
+  )
+  
    
 }
 

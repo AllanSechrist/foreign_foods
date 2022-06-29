@@ -28,12 +28,7 @@ export default function ActionAreaCard(props) {
             {props.service}
           </Typography>
         </CardContent>
-        {/* <CardMedia
-          component="img"
-          height="140"
-          image="/static/images/cards/contemplative-reptile.jpg"
-          alt="green iguana"
-        /> */}
+    
       </CardActionArea>
         <a href={`/blog/new-blog/${props.id}`}>add-blog</a>
     </Card>
