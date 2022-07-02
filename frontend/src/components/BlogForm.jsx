@@ -45,7 +45,7 @@ function BlogForm(props) {
                         <Field name="title">
                             {({ input, meta}) => (
                                 <div>
-                                    <label>Title</label>
+                                    {/* <label>Title</label> */}
                                     <input {...input} type="text" placeholder="Title" />
                                     {meta.error && meta.touched && <span>{meta.error}</span>}
                                 </div>
@@ -54,28 +54,30 @@ function BlogForm(props) {
                         <Field name="subtitle">
                             {({ input, meta}) =>(
                                 <div>
-                                    <label>Subtitle</label>
+                                    {/* <label>Subtitle</label> */}
                                     <input {...input} type="text" placeholder="Subtitle" />
                                     {meta.error && meta.touched && <span>{meta.error}</span>}
                                 </div>
                             )}
                         </Field>
-                        <Field name="body" component="textarea">
-                            {({ input, meta}) => (
-                                <div>
-                                    <label>Body</label>
-                                    <textarea {...input} placeholder="Body" />
-                                    {meta.error && meta.touched && <span>{meta.error}</span>}
-                                </div>
-                            )}
-                        </Field>
+                        <div className="note">
+                            <Field name="body" component="textarea">
+                                {({ input, meta}) => (
+                                    <div>
+                                        {/* <label>Body</label> */}
+                                        <textarea {...input} placeholder="Body" />
+                                        {meta.error && meta.touched && <span>{meta.error}</span>}
+                                    </div>
+                                )}
+                            </Field>
+                        </div>
                         <button type="submit">
                             Submit
                         </button>
                         <button type="button" onClick={form.reset} disabled={submitting || pristine}>
                             Reset
                         </button>
-                        <pre>{JSON.stringify(values, 0, 2)}</pre>
+                        {/* <pre>{JSON.stringify(values, 0, 2)}</pre> */}
                     </form>
                 )}
             />

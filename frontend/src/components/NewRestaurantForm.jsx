@@ -65,7 +65,7 @@ function NewRestaurantForm() {
                         <Field name='restaurantname'>
                             {({ input, meta}) => (
                                 <div>
-                                    <label>Restaurant Name</label>
+                                    {/* <label>Restaurant Name</label> */}
                                     <input {...input} type='text' placeholder="Restaurant Name" />
                                     {meta.error && meta.touched && <span>{meta.error}</span>}
                                 </div>
@@ -74,7 +74,7 @@ function NewRestaurantForm() {
                         <Field name='style'>
                             {({ input, meta}) => (
                                 <div>
-                                    <label>Style</label>
+                                    {/* <label>Style</label> */}
                                     <input {...input} type='text' placeholder='Style' />
                                     {meta.error && meta.touched && <span>{meta.error}</span>}
                                 </div>
@@ -83,7 +83,7 @@ function NewRestaurantForm() {
                         <Field name="website">
                             {({ input, meta}) => (
                                 <div>
-                                    <label>Website</label>
+                                    {/* <label>Website</label> */}
                                     <input {...input} type='text' placeholder='Website' />
                                     {meta.error && meta.touched && <span>{meta.error}</span>}
                                 </div>
@@ -92,7 +92,7 @@ function NewRestaurantForm() {
                         <Field name="location">
                             {({ input, meta}) => (
                                 <div>
-                                    <label>Location</label>
+                                    {/* <label>Location</label> */}
                                     <input {...input} type='text' placeholder='Location' />
                                     {meta.error && meta.touched && <span>{meta.error}</span>}
                                 </div>
