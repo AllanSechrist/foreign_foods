@@ -1,8 +1,11 @@
 import React from 'react'
+import HomeHero from '../HomeHero'
 
 function Home() {
     return (
-        <h1>Home!</h1>
+        <div>
+            <HomeHero />
+        </div>
     )
 }
 

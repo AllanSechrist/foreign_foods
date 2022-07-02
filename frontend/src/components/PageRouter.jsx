@@ -20,23 +20,42 @@ function PageRouter() {
     const { store, actions } = useContext(Context);
     return (
         <Router>
-            <Header />
-            <nav>
-                <Link to="/">Home</Link>
-                <Link to="/restaurants">Restaurants</Link>
-                <Link to="/new-restaurant">Add Restaurant</Link>
-                <Link to="/blog">Blogs</Link>
-                <Link to="/about">About</Link>
-                { !store.token ? 
-                    <Link to="/login">
-                        <button>Login</button>
-                    </Link>
-                    :
-                    <button onClick={() => actions.logout()}>Logout</button>
-                }
-                
+            
+            <nav className="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+                <div className="container-fluid">
+                    <ul className="navbar-nav me-auto mb-2 mb-md-0">
+                        <li className="nav-item">
+                            <Link to="/">Home</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link to="/restaurants">Restaurants</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link to="/new-restaurant">Add Restaurant</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link to="/blog">Blogs</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link to="/about">About</Link>
+                        </li>
+                    
+                    
+                    
+                    
+                    
+                    { !store.token ? 
+                        <Link to="/login">
+                            <button>Login</button>
+                        </Link>
+                        :
+                        <button onClick={() => actions.logout()}>Logout</button>
+                    }
+                    </ul>
+                </div>
 
             </nav>
+            {/* <Header /> */}
             <Routes>
                 <Route path="/" element={<Home/>} />
                 <Route path="/restaurants" element={<Restaurants/>} />
