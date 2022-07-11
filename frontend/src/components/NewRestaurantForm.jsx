@@ -43,7 +43,7 @@ function NewRestaurantForm() {
   };
   return (
     <div>
-      <h1>Add new restaurant</h1>
+      <h1 className="text-center text-6xl mb-10">Add New Restaurant</h1>
       <Form
         onSubmit={onSubmit}
         validate={(values) => {

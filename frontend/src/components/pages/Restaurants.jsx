@@ -7,13 +7,13 @@ import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: "center",
-  color: theme.palette.text.secondary,
-}));
+// const Item = styled(Paper)(({ theme }) => ({
+//   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
+//   ...theme.typography.body2,
+//   padding: theme.spacing(1),
+//   textAlign: "center",
+//   color: theme.palette.text.secondary,
+// }));
 
 // function RestaurantGrid() {
 //   return (
@@ -48,7 +48,7 @@ function Restaurants() {
           {restaurantList.map((restaurant) => {
             return (
               <Grid item xs={3}>
-                <Item>
+                <div>
                   <ActionAreaCard
                     key={restaurant.id}
                     id={restaurant.id}
@@ -58,7 +58,7 @@ function Restaurants() {
                     price={restaurant.price_rating}
                     service={restaurant.service_rating}
                   />
-                </Item>
+                </div>
               </Grid>
             );
           })}

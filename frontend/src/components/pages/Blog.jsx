@@ -21,7 +21,10 @@ function Blog() {
   }, [])
   if (blogToShow.length < 1) {
     return (
-      <h1>Blog Coming Soon!</h1>
+      <div className="text-center m-10">
+        <h1 className="text-8xl font-bold">Blog Coming Soon!</h1>
+      </div>
+
     )
   }
   

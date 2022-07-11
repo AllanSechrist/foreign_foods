@@ -18,9 +18,10 @@ function PageRouter() {
   const { store, actions } = useContext(Context);
   return (
     <Router>
-      <nav>
-        <NavigationBar />
-        {/* <Link to="/">Home</Link>
+      <div className="flex flex-col justify-between h-screen">
+        <nav>
+          <NavigationBar />
+          {/* <Link to="/">Home</Link>
                 <Link to="/restaurants">Restaurants</Link>
                 <Link to="/new-restaurant">Add Restaurant</Link>
                 <Link to="/blog">Blogs</Link>
@@ -33,19 +34,22 @@ function PageRouter() {
                     <button onClick={() => actions.logout()}>Logout</button>
                 } */}
 
-        {/* <Header /> */}
-      </nav>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/restaurants" element={<Restaurants />} />
-        <Route path="/new-restaurant" element={<NewRestaurant />} />
-        <Route path="/blog/new-blog/:restaurantId" element={<NewBlog />} />
-        <Route path="/blog" element={<Blogs />} />
-        <Route path="/blog/:restaurantId" element={<Blog />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/login" element={<Login />} />
-      </Routes>
-      <Footer />
+          {/* <Header /> */}
+        </nav>
+        <main className="container mx-auto px-3 pb-12">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/restaurants" element={<Restaurants />} />
+            <Route path="/new-restaurant" element={<NewRestaurant />} />
+            <Route path="/blog/new-blog/:restaurantId" element={<NewBlog />} />
+            <Route path="/blog" element={<Blogs />} />
+            <Route path="/blog/:restaurantId" element={<Blog />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/login" element={<Login />} />
+          </Routes>
+        </main>
+        <Footer />
+      </div>
     </Router>
   );
 }
