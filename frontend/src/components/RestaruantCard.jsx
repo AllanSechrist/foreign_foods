@@ -1,28 +1,29 @@
 import React from "react";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-// import CardMedia from '@mui/material/CardMedia';
-import Typography from "@mui/material/Typography";
-import { CardActionArea } from "@mui/material";
+import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
-export default function ActionAreaCard(props) {
-  const blogLink = `/blog/${props.id}`;
+function RestaurantCard({
+  restaurant: { id, name, style, food_rating, price_rating, service_rating },
+}) {
   return (
-    <Card sx={{ maxWidth: 345 }}>
-      <CardActionArea href={blogLink}>
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            {props.name}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {props.style}
-          </Typography>
-          <Typography variant="body1">{props.rating}</Typography>
-          <Typography variant="body1">{props.price}</Typography>
-          <Typography variant="body1">{props.service}</Typography>
-        </CardContent>
-      </CardActionArea>
-      <a href={`/blog/new-blog/${props.id}`}>add-blog</a>
-    </Card>
+    <Link to={`/blog/${id}`}>
+      <div className="card shadow-xl bg-base-100">
+        <div className="text-center items-center space-x-4 card-body">
+          <div>
+            <h1 className="card-title">{name}</h1>
+            <h3>{style}</h3>
+            <p>{food_rating}</p>
+            <p>{price_rating}</p>
+            <p>{service_rating}</p>
+          </div>
+        </div>
+      </div>
+    </Link>
   );
 }
+
+RestaurantCard.propTypes = {
+  user: PropTypes.object.isRequired,
+};
+
+export default RestaurantCard;
