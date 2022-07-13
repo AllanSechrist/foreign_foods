@@ -1,14 +1,6 @@
 import React, { useContext } from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
-
-import { Link } from "react-router-dom";
 import { Context } from "./helpers/Context";
+import { Link } from "react-router-dom";
 import Restaurants from "./pages/Restaurants";
 import Blogs from "./pages/Blogs";
 import Home from "./pages/Home";
@@ -21,55 +13,29 @@ import Login from "./pages/Login";
 export default function NavigationBar() {
   const { store, actions } = useContext(Context);
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            News
-          </Typography>
-          <Link to="/">
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+    <nav className="navbar mb-12 shadow-lg bg-neutral text-neutral-content">
+      <div className="container mx-auto">
+        <div className="flex-none px-2 mx-2">
+          <Link to="/" className="font-bold align-middle">
+            Gaijin Foodie
+          </Link>
+        </div>
+        <div className="flex-1 px-2 mx-2">
+          <div className="flex justify-end">
+            <Link className="btn btn-ghost btn-sm mx-1" to="/">
               Home
-            </Typography>
-          </Link>
-          <Link to="/restaurants">
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              Restaurants
-            </Typography>
-          </Link>
-          <Link to="/new-restaurant">
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              Add Restaurant
-            </Typography>
-          </Link>
-          <Link to="/blog">
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              Blogs
-            </Typography>
-          </Link>
-          <Link to="/about">
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              About
-            </Typography>
-          </Link>
-          {!store.token ? (
-            <Link to="/login">
-              <Button color="inherit">Login</Button>
             </Link>
-          ) : (
-            <Button onClick={() => actions.logout()}>Logout</Button>
-          )}
-        </Toolbar>
-      </AppBar>
-    </Box>
+            <Link className="btn btn-ghost btn-sm mx-1" to="/restaurants">Restaurants</Link>
+            <Link className="btn btn-ghost btn-sm mx-1" to="/blog">Blogs</Link>
+            <Link className="btn btn-ghost btn-sm mx-1" to="/about">About</Link>
+            {!store.token ? (
+              <Link className="btn btn-ghost btn-sm mx-1" to="/login">Login</Link>
+            ) : (
+              <button className="btn btn-ghost btn-sm mx-1" onClick={() => actions.logout()}>Logout</button>
+            )}
+          </div>
+        </div>
+      </div>
+    </nav>
   );
 }

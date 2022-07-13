@@ -11,7 +11,7 @@ function Home() {
             Want to find new and exotic places to eat?
           </p>
           <p>
-            You just fond the right place! Checkout my collection of foreign
+            You just found the right place! Checkout my collection of foreign
             restaurants in Tokyo!
           </p>
 					<Link to='/restaurants' className='btn btn-primary btn-lg'>
