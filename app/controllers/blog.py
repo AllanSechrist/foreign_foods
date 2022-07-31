@@ -67,6 +67,14 @@ def add_new_post(restaurant_id):
         return jsonify({"msg": "Restaurant does not exsist"}), 404
 
 
+@blog.route("/get-blog/<int:blog_id>", methods=["GET"])
+def get_blog(blog_id):
+    blog_to_get = BlogPost.query.get(blog_id)
+    blog_schema = BlogPostSchema()
+    output = blog_schema.dump(blog_to_get)
+    return jsonify({"blog": output})
+
+
 @blog.route("/edit-blog/<int:blog_id>", methods=["PATCH"])
 # @jwt_required()
 def edit_blog(blog_id):

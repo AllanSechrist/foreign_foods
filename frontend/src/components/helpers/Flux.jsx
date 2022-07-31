@@ -6,6 +6,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       token: null,
       restaurants: [],
       blogs: [],
+      blog: null,
+      blogToEdit: null,
     },
     actions: {
       // get restaurants and add them to the store
@@ -14,12 +16,30 @@ const getState = ({ getStore, getActions, setStore }) => {
         const { restaurant } = data.data;
         setStore({ restaurants: restaurant });
       },
-			// get blogs and add them to the store
+      // get blogs and add them to the store
       getBlogs: async () => {
         const data = await axios.get("http://localhost:5000/blog");
         const { blog } = data.data;
         setStore({ blogs: blog });
-				console.log("This is getBlog!")
+      },
+      // get a single blog and add it to the store
+      getBlog: async (restaurantId) => {
+        const data = await axios.get(
+          `http://localhost:5000/blog/${restaurantId}`
+        );
+        const { blog } = data.data;
+        if (blog.length >= 1) {
+          setStore({ blog: blog });
+        }
+      },
+      // get the blog to edit and add it to the store
+      getBlogToEdit: async (blogId) => {
+        const data = await axios.get(
+          `http://localhost:5000/blog/get-blog/${blogId}`
+        );
+        const { blog } = data.data;
+        console.log(blog);
+        setStore({ blogToEdit: blog });
       },
 
       login: async (email, password) => {
@@ -110,11 +130,6 @@ const getState = ({ getStore, getActions, setStore }) => {
           .catch(function (error) {
             console.log(error);
           });
-      },
-      getBlogs: async () => {
-        const data = await axios.get("http://localhost:5000/blog");
-        const { blog } = data.data;
-        return blog;
       },
       deleteBlog: async (blogId) => {
         await axios
