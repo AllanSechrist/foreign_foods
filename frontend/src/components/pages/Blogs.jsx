@@ -1,38 +1,21 @@
-import React, {useState, useEffect} from 'react'
-import axios from "axios"
-import BlogCard from '../BlogCard'
+import React, { useContext, useEffect } from "react";
+import { Context } from "../helpers/Context";
+import BlogCard from "../BlogCard";
 
 function Blogs() {
- 
-  const [blogList, setBlogList] = useState([])
-
-
-  const fetchBlogs = async () => {
-    const data = await axios.get("http://localhost:5000/blog")
-    const {blog} = data.data
-    setBlogList(blog)
-  }
+  const { store, actions } = useContext(Context);
 
   useEffect(() => {
-    fetchBlogs()
-  }, [])
-    return (
-      <div>
-          {blogList.map((blog) => {
-              return(
-                  <BlogCard 
-                      key={blog.id}
-                      id={blog.id}
-                      title={blog.title}
-                      subtitle={blog.subtitle}
-                      date={blog.date}
-                      body={blog.body}
-                  />
-              )
-          })}
-      </div>
-    )
-  }
+    actions.getBlogs();
+  }, []);
 
+  return (
+    <div>
+      {store.blogs.map((blog) => {
+        return <BlogCard key={blog.id} blog={blog} />;
+      })}
+    </div>
+  );
+}
 
-export default Blogs
+export default Blogs;

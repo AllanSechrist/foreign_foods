@@ -1,23 +1,17 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useEffect, useContext } from "react";
+import { Context } from "../helpers/Context";
 import RestaruantCard from "../RestaruantCard";
 
 function Restaurants() {
-  const [restaurantList, setRestaurantList] = useState([]);
-
-  const fetchRestaurants = async () => {
-    const data = await axios.get("http://localhost:5000/restaurants");
-    const { restaurant } = data.data;
-    setRestaurantList(restaurant);
-  };
+  const { store, actions } = useContext(Context);
 
   useEffect(() => {
-    fetchRestaurants();
+    actions.getRestaurants();
   }, []);
 
   return (
     <div className="grid grid-cols-1 gap-8 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2">
-      {restaurantList.map((restaurant) => (
+      {store.restaurants.map((restaurant) => (
         <RestaruantCard key={restaurant.id} restaurant={restaurant} />
       ))}
     </div>
