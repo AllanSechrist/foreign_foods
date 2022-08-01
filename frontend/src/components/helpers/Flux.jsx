@@ -6,7 +6,6 @@ const getState = ({ getStore, getActions, setStore }) => {
       token: null,
       restaurants: [],
       blogs: [],
-      blog: null,
       blogToEdit: null,
     },
     actions: {
@@ -22,16 +21,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         const { blog } = data.data;
         setStore({ blogs: blog });
       },
-      // get a single blog and add it to the store
-      getBlog: async (restaurantId) => {
-        const data = await axios.get(
-          `http://localhost:5000/blog/${restaurantId}`
-        );
-        const { blog } = data.data;
-        if (blog.length >= 1) {
-          setStore({ blog: blog });
-        }
-      },
+     
       // get the blog to edit and add it to the store
       getBlogToEdit: async (blogId) => {
         const data = await axios.get(
