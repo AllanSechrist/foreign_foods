@@ -8,7 +8,7 @@ function createMarkup(markup) {
 }
 
 function BlogCard({ blog: { id, title, subtitle, date, body } }) {
-  const { actions } = useContext(Context);
+  const { store, actions } = useContext(Context);
 
   return (
     <div className="text-left">
@@ -17,17 +17,21 @@ function BlogCard({ blog: { id, title, subtitle, date, body } }) {
       <p className="pb-5">{date}</p>
       <p className="text-2xl" dangerouslySetInnerHTML={createMarkup(body)} />
       <div className="my-5 text-right">
-        <button
-          className="btn btn-outline btn-error"
-          onClick={() => {
-            actions.deleteBlog(id);
-          }}
-        >
-          Delete Blog
-        </button>
-        <Link to={`/blog/edit-blog/${id}`}>
-          <button className="btn btn-primary mx-5">Edit Blog</button>
-        </Link>
+        {store.token && store.token !== "" && store.token !== undefined ? (
+          <>
+            <button
+              className="btn btn-outline btn-error"
+              onClick={() => {
+                actions.deleteBlog(id);
+              }}
+            >
+              Delete Blog
+            </button>
+            <Link to={`/blog/edit-blog/${id}`}>
+              <button className="btn btn-primary mx-5">Edit Blog</button>
+            </Link>
+          </>  
+        ) : (<></>)}
       </div>
     </div>
   );

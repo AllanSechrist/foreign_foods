@@ -76,7 +76,7 @@ def get_blog(blog_id):
 
 
 @blog.route("/edit-blog/<int:blog_id>", methods=["PATCH"])
-# @jwt_required()
+@jwt_required()
 def edit_blog(blog_id):
     blog_to_update = BlogPost.query.get(blog_id)
 
@@ -110,7 +110,7 @@ def edit_blog(blog_id):
 
 
 @blog.route('/delete-blog/<int:blog_id>', methods=["DELETE"])
-# @jwt_required()
+@jwt_required()
 def delete_blog(blog_id):
     blog_to_delete = BlogPost.query.get(blog_id)
     if blog_to_delete:

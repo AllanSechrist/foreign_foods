@@ -19,7 +19,7 @@ function Login() {
       <h1 className="text-center text-6xl mb-10">LOGIN</h1>
       <h2 className="text-center text-3xl">Welcome Back!</h2>
       {store.token && store.token !== "" && store.token !== undefined ? (
-        "You are logged in with this token " + store.token
+        "Logged In"
       ) : (
         <Form
           onSubmit={onSubmit}
