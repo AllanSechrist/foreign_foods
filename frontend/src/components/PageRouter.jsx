@@ -24,7 +24,7 @@ function PageRouter() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/restaurants" element={<Restaurants />} />
-            <Route path="/new-restaurant" element={<NewRestaurant />} />
+            <Route path="restaurants/new-restaurant" element={<NewRestaurant />} />
             <Route path="/blog/new-blog/:restaurantId" element={<NewBlog />} />
             <Route path="/blog/edit-blog/:blogId" element={<EditBlog />} />
             <Route path="/blog" element={<Blogs />} />

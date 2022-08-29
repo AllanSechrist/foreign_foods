@@ -100,22 +100,22 @@ function NewRestaurantForm() {
                 </div>
               )}
             </Field>
-            <div>
-              <label>Open Hour</label>
+            <div className='form-margin-top'>
+              <label className="mx-1"><b>Open Hour: </b></label>
               <Field name="openHour" component="select">
                 <option value="">N/A</option>
                 {hours.map((hour) => {
                   return <option value={hour}>{hour}</option>;
                 })}
               </Field>
-              <label>Minutes</label>
+              <label className="mx-1"><b>Minutes: </b></label>
               <Field name="openMinutes" component="select">
                 <option value="">N/A</option>
                 {minutes.map((minute) => {
                   return <option value={minute}>{minute}</option>;
                 })}
               </Field>
-              <label>AMPM</label>
+              <label className="mx-1"><b>AMPM: </b></label>
               <Field name="openAmpm" component="select">
                 <option value="">N/A</option>
                 {ampm.map((option) => {
@@ -123,22 +123,22 @@ function NewRestaurantForm() {
                 })}
               </Field>
             </div>
-            <div>
-              <label>Close Hour</label>
+            <div className='form-margin-top'>
+              <label className="mx-1"><b>Close Hour: </b></label>
               <Field name="closeHour" component="select">
                 <option value="">N/A</option>
                 {hours.map((hour) => {
                   return <option value={hour}>{hour}</option>;
                 })}
               </Field>
-              <label>Minutes</label>
+              <label className="mx-1"><b>Minutes: </b></label>
               <Field name="closeMinutes" component="select">
                 <option value="">N/A</option>
                 {minutes.map((minute) => {
                   return <option value={minute}>{minute}</option>;
                 })}
               </Field>
-              <label>AMPM</label>
+              <label className="mx-1"><b>AMPM: </b></label>
               <Field name="closeAmpm" component="select">
                 <option value="">N/A</option>
                 {ampm.map((option) => {
@@ -146,8 +146,8 @@ function NewRestaurantForm() {
                 })}
               </Field>
             </div>
-            <div>
-              <label>Food Rating</label>
+            <div className='form-margin-top'>
+              <label className="mx-1"><b>Food Rating: </b></label>
               <Field name="food_rating" component="select">
                 <option value="">N/A</option>
                 {foodRating.map((rating) => {
@@ -155,8 +155,8 @@ function NewRestaurantForm() {
                 })}
               </Field>
             </div>
-            <div>
-              <label>Price</label>
+            <div className='form-margin-top'>
+              <label className="mx-1"><b>Price: </b></label>
               <Field name="price" component="select">
                 <option value="">N/A</option>
                 {price.map((rating) => {
@@ -164,8 +164,8 @@ function NewRestaurantForm() {
                 })}
               </Field>
             </div>
-            <div>
-              <label>Service</label>
+            <div className='form-margin-top'>
+              <label className="mx-1"><b>Service: </b></label>
               <Field name="service" component="select">
                 <option value="">N/A</option>
                 {service.map((rating) => {
@@ -173,16 +173,20 @@ function NewRestaurantForm() {
                 })}
               </Field>
             </div>
-
-            <button type="submit">Submit</button>
-            <button
-              type="button"
-              onClick={form.reset}
-              disabled={submitting || pristine}
-            >
-              Reset
-            </button>
-            <pre>{JSON.stringify(values, 0, 2)}</pre>
+            <div className="btn-group my-10 flex items-center justify-center">
+              <button type="submit" className="btn btn-primary">
+                Submit
+              </button>
+              <button
+                type="button"
+                onClick={form.reset}
+                disabled={submitting || pristine}
+                className="btn btn-ghost ml-5"
+              >
+                Reset
+              </button>
+            </div>
+            {/* <pre>{JSON.stringify(values, 0, 2)}</pre> */}
           </form>
         )}
       />

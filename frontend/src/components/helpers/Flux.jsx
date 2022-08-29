@@ -103,7 +103,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         };
         await axios
           .post(
-            `http://localhost:5000/new-restaurant`,
+            `http://localhost:5000/restaurants/new-restaurant`,
             {
               name: restaurantName,
               style: style,

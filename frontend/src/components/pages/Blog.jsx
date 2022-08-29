@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState, useContext } from "react";
+import { useParams, Link } from "react-router-dom";
 import BlogCard from "../BlogCard";
 import axios from "axios";
+import { Context } from "../helpers/Context";
 import Spinner from "../Spinner";
 
 function Blog() {
   let { restaurantId } = useParams();
+  const { store } = useContext(Context);
   const [loading, setLoading] = useState(true);
   const [blogToShow, setBlogToShow] = useState([]);
 
@@ -18,12 +20,11 @@ function Blog() {
 
   useEffect(() => {
     getBlog();
-    setLoading(false)
+    setLoading(false);
   }, []);
 
-
-  if(loading) {
-    return <Spinner />
+  if (loading) {
+    return <Spinner />;
   }
 
   if (blogToShow.length > 0) {
@@ -38,7 +39,18 @@ function Blog() {
         {/* <button onClick={() => {setEditMode(true)}}>Edit Blog</button> */}
       </div>
     );
-  } 
+  }
+  return (
+    <div className="flex items-center justify-center">
+      {store.token && store.token !== "" && store.token !== undefined ? (
+        <Link to={`/blog/new-blog/${restaurantId}`}>
+          <button className="btn btn-lg">+ Add Blog</button>
+        </Link>
+      ) : (
+        <h1 className='text-center text-7xl'>Blog Coming Soon!</h1>
+      )}
+    </div>
+  );
 }
 
 export default Blog;
