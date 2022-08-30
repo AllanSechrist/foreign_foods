@@ -47,14 +47,6 @@ def site_index():
     return render_template("index.html")
 
 
-@site.route("/restaurants", methods=["GET"])
-def restaurants():
-    restaurants = Restaurant.query.all()
-    restaurant_schema = RestaurantSchema(many=True)
-    output = restaurant_schema.dump(restaurants)
-    return jsonify({"restaurant": output})
-
-
 @site.route("/about")
 def about():
     return render_template("about.html")
@@ -79,6 +71,23 @@ def logout():
     # logout_user()
     # return redirect(url_for('site.site_index'))
     return jsonify({"msg": "User has been logged out"})
+
+
+@site.route("/restaurants", methods=["GET"])
+def restaurants():
+    restaurants = Restaurant.query.all()
+    restaurant_schema = RestaurantSchema(many=True)
+    output = restaurant_schema.dump(restaurants)
+    return jsonify({"restaurant": output})
+
+
+@site.route("/restaurants/<int:restaurant_id>/blog")
+def get_restaurant_blog(restaurant_id):
+    requested_restaurant = Restaurant.query.get(restaurant_id)
+    blog_post = requested_restaurant.blog_post
+    blog_schema = BlogPostSchema(many=True)
+    output = blog_schema.dump(blog_post)
+    return jsonify({"blog": output})
 
 
 @site.route("/restaurants/new-restaurant", methods=["GET", "POST"])

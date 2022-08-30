@@ -14,7 +14,7 @@ function Home() {
             You just found the right place! Checkout my collection of foreign
             restaurants in Tokyo!
           </p>
-					<Link to='/restaurants' className='btn btn-primary btn-lg'>
+					<Link to='/restaurants' className='btn btn-primary btn-lg mt-20'>
 						Enter
 					</Link>
         </div>

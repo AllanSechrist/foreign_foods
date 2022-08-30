@@ -34,13 +34,13 @@ def all_blogs():
     # return render_template('all-blogs.html', posts=posts, current_user=current_user)
 
 
-@blog.route('/<int:restaurant_id>', methods=["GET"])
-def show_blog(restaurant_id):
-    requested_restaurant = Restaurant.query.get(restaurant_id)
-    blog_post = requested_restaurant.blog_post
-    blog_schema = BlogPostSchema(many=True)
-    output = blog_schema.dump(blog_post)
-    return jsonify({"blog": output})
+# @blog.route('/<int:restaurant_id>', methods=["GET"])
+# def show_blog(restaurant_id):
+#     requested_restaurant = Restaurant.query.get(restaurant_id)
+#     blog_post = requested_restaurant.blog_post
+#     blog_schema = BlogPostSchema(many=True)
+#     output = blog_schema.dump(blog_post)
+#     return jsonify({"blog": output})
     # return render_template('blog.html', restaurant=requested_restaurant)
 
 
@@ -110,7 +110,7 @@ def edit_blog(blog_id):
 
 
 @blog.route('/delete-blog/<int:blog_id>', methods=["DELETE"])
-@jwt_required()
+# @jwt_required()
 def delete_blog(blog_id):
     blog_to_delete = BlogPost.query.get(blog_id)
     if blog_to_delete:

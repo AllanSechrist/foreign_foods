@@ -1,23 +1,33 @@
-import React, {useEffect, useContext } from "react";
-import {Context} from '../helpers/Context'
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import BlogForm from "../BlogForm";
+import axios from "axios";
 
 function EditBlog() {
   let { blogId } = useParams();
-	const { store, actions } = useContext(Context)
+  const [blogToEdit, setBlogToEdit] = useState([]);
 
-	useEffect(() => {
-		actions.getBlogToEdit(blogId)
-	}, [])
+  // useEffect(() => {
+  //   actions.getBlogToEdit(blogId);
+  // }, []);
+
+  const getBlogToEdit = async () => {
+    const data = await axios.get(`http://localhost:5000/blog/get-blog/${blogId}`)
+    const { blog } = data.data
+    setBlogToEdit(blog)
+  }
+
+  useEffect(() => {
+    getBlogToEdit()
+  })
 
   return (
-		<BlogForm
+    <BlogForm
       isEdit={true}
-      blogId={store.blogToEdit.id}
-      title={store.blogToEdit.title}
-      subtitle={store.blogToEdit.subtitle}
-      body={store.blogToEdit.body}
+      blogId={blogToEdit.id}
+      title={blogToEdit.title}
+      subtitle={blogToEdit.subtitle}
+      body={blogToEdit.body}
     />
   );
 }

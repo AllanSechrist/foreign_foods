@@ -6,7 +6,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       token: null,
       restaurants: [],
       blogs: [],
-      blogToEdit: null,
+      // blogToEdit: null,
     },
     actions: {
       // get restaurants and add them to the store
@@ -19,18 +19,19 @@ const getState = ({ getStore, getActions, setStore }) => {
       getBlogs: async () => {
         const data = await axios.get("http://localhost:5000/blog");
         const { blog } = data.data;
+        console.log(data);
         setStore({ blogs: blog });
       },
-     
+
       // get the blog to edit and add it to the store
-      getBlogToEdit: async (blogId) => {
-        const data = await axios.get(
-          `http://localhost:5000/blog/get-blog/${blogId}`
-        );
-        const { blog } = data.data;
-        console.log(blog);
-        setStore({ blogToEdit: blog });
-      },
+      // getBlogToEdit: async (blogId) => {
+      //   const data = await axios.get(
+      //     `http://localhost:5000/blog/get-blog/${blogId}`
+      //   );
+      //   const { blog } = data.data;
+      //   console.log(blog);
+      //   setStore({ blogToEdit: blog });
+      // },
 
       login: async (email, password) => {
         await axios
@@ -121,6 +122,35 @@ const getState = ({ getStore, getActions, setStore }) => {
             console.log(error);
           });
       },
+
+      deleteRestaurant: async (restaurantId) => {
+        await axios
+          .delete(
+            `http://localhost:5000/restaurant/delete-restaurant/${restaurantId}`
+          )
+          .catch(function (error) {
+            console.log(error);
+          });
+      },
+      // editRestaurant: async (restaurantId) => {
+      //   const store = getStore();
+      //   const opts = {
+      //     headers: {
+      //       Authorization: "Bearer " + store.token,
+      //     },
+      //   };
+      //   await axios
+      //     .patch(
+      //       `http://localhost:5000/restaurant/edit-restaurant/${restaurantId}`,
+      //       {
+      //
+      //       },
+      //       opts
+      //     )
+      //     .catch(function (error) {
+      //       console.log(error);
+      //     });
+      // },
       deleteBlog: async (blogId) => {
         await axios
           .delete(`http://localhost:5000/blog/delete-blog/${blogId}`)

@@ -44,8 +44,8 @@ function Login() {
             <form onSubmit={handleSubmit}>
               <Field name="username">
                 {({ input, meta }) => (
-                  <div>
-                    <label>Username</label>
+                  <div className="form-margin-top">
+                    {/* <label>Username</label> */}
                     <input {...input} type="text" placeholder="Username" />
                     {(meta.error || meta.submitError) && meta.touched && (
                       <span>{meta.error || meta.submitError}</span>
@@ -55,27 +55,32 @@ function Login() {
               </Field>
               <Field name="password">
                 {({ input, meta }) => (
-                  <div>
-                    <label>Password</label>
+                  <div className="form-margin-top">
+                    {/* <label>Password</label> */}
                     <input {...input} type="password" placeholder="Password" />
                     {meta.error && meta.touched && <span>{meta.error}</span>}
                   </div>
                 )}
               </Field>
               {submitError && <div className="error">{submitError}</div>}
-              <div className="buttons">
-                <button type="submit" disabled={submitting}>
+              <div className="btn-group my-10 flex items-center justify-center">
+                <button
+                  type="submit"
+                  className="btn btn-primary"
+                  disabled={submitting}
+                >
                   Log In
                 </button>
                 <button
                   type="button"
                   onClick={form.reset}
                   disabled={submitting || pristine}
+                  className="btn btn-ghost ml-5"
                 >
                   Reset
                 </button>
               </div>
-              <pre>{JSON.stringify(values, 0, 2)}</pre>
+              {/* <pre>{JSON.stringify(values, 0, 2)}</pre> */}
             </form>
           )}
         ></Form>

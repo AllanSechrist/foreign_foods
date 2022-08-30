@@ -37,3 +37,10 @@
   .form-margin-top {
     margin-top: 40px;
   }
+
+  .removeIcon {
+    cursor: pointer;
+    position: absolute;
+    top: 25%;
+    right: 2%;
+  }

@@ -22,7 +22,11 @@ function BlogForm(props) {
   };
   return (
     <div>
-      {!props.isEdit ? <h1>Add new blog</h1> : <h1>Edit Blog</h1>}
+      {!props.isEdit ? (
+        <h1 className="text-center text-7xl">Add new blog</h1>
+      ) : (
+        <h1 className="text-center text-7xl">Edit Blog</h1>
+      )}
       <Form
         onSubmit={onSubmit}
         initialValues={{
@@ -47,7 +51,7 @@ function BlogForm(props) {
           <form onSubmit={handleSubmit}>
             <Field name="title">
               {({ input, meta }) => (
-                <div>
+                <div className="form-margin-top">
                   {/* <label>Title</label> */}
                   <input {...input} type="text" placeholder="Title" />
                   {meta.error && meta.touched && <span>{meta.error}</span>}
@@ -56,7 +60,7 @@ function BlogForm(props) {
             </Field>
             <Field name="subtitle">
               {({ input, meta }) => (
-                <div>
+                <div className="form-margin-top">
                   {/* <label>Subtitle</label> */}
                   <input {...input} type="text" placeholder="Subtitle" />
                   {meta.error && meta.touched && <span>{meta.error}</span>}
@@ -66,7 +70,7 @@ function BlogForm(props) {
             <div className="note">
               <Field name="body" component="textarea">
                 {({ input, meta }) => (
-                  <div>
+                  <div className="form-margin-top">
                     {/* <label>Body</label> */}
                     <textarea {...input} placeholder="Body" />
                     {meta.error && meta.touched && <span>{meta.error}</span>}
@@ -74,14 +78,19 @@ function BlogForm(props) {
                 )}
               </Field>
             </div>
-            <button type="submit">Submit</button>
-            <button
-              type="button"
-              onClick={form.reset}
-              disabled={submitting || pristine}
-            >
-              Reset
-            </button>
+            <div className="btn-group my-10 flex items-center justify-center">
+              <button type="submit" className="btn btn-primary">
+                Submit
+              </button>
+              <button
+                type="button"
+                onClick={form.reset}
+                disabled={submitting || pristine}
+                className="btn btn-ghost ml-5"
+              >
+                Reset
+              </button>
+            </div>
             {/* <pre>{JSON.stringify(values, 0, 2)}</pre> */}
           </form>
         )}

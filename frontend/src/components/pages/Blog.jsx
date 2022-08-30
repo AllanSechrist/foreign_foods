@@ -12,7 +12,7 @@ function Blog() {
   const [blogToShow, setBlogToShow] = useState([]);
 
   const getBlog = async () => {
-    const data = await axios.get(`http://localhost:5000/blog/${restaurantId}`);
+    const data = await axios.get(`http://localhost:5000/restaurants/${restaurantId}/blog`);
     const { blog } = data.data;
     setBlogToShow(blog);
     console.log(blogToShow);
