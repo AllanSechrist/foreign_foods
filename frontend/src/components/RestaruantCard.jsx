@@ -11,7 +11,7 @@ function RestaurantCard({
   return (
     <>
       <div className="card shadow-xl bg-base-100">
-        <div className="text-center items-center space-x-4 card-body">
+        <div className="text-center items-center space-x-4 card-body card-bordered bg-accent-content">
           <div>
             <h1 className="card-title">{name}</h1>
             <h3>{style}</h3>
@@ -21,7 +21,7 @@ function RestaurantCard({
           </div>
           <div className="card-actions mt-10">
             <Link to={`/restaurants/${id}/blog`}>
-              <button className="btn gap-2 btn-primary">
+              <button className="btn gap-2 btn-accent">
                 View Blog <ViewBlogIcon fill='rgb(255, 255, 255)'/>
               </button>
             </Link>
