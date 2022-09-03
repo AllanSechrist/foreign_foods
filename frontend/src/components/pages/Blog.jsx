@@ -29,7 +29,7 @@ function Blog() {
 
   if (blogToShow.length > 0) {
     return (
-      <div>
+      <div className="p-10">
         {/* Hey! Its blog number { blogToShow.id } */}
         {blogToShow.map((blog) => {
           return <BlogCard key={blog.id} blog={blog} />;

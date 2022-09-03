@@ -28,7 +28,7 @@ function BlogCard({ blog: { id, title, subtitle, date, body } }) {
               Delete Blog
             </button>
             <Link to={`/blog/edit-blog/${id}`}>
-              <button className="btn btn-primary mx-5">Edit Blog</button>
+              <button className="btn btn-secondary mx-5">Edit Blog</button>
             </Link>
           </>  
         ) : (<></>)}

@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 export default function NavigationBar() {
   const { store, actions } = useContext(Context);
   return (
-    <nav className="navbar bg-primary-content text-primary">
+    <nav className="navbar bg-neutral text-base-100">
       <div className="container mx-auto">
         <div className="flex-none px-2 mx-2">
           <Link to="/" className="font-bold align-middle">

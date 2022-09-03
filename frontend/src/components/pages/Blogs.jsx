@@ -10,9 +10,14 @@ function Blogs() {
   }, []);
 
   return (
-    <div>
+    <div className="mt-10 p-10">
       {store.blogs.map((blog) => {
-        return <BlogCard key={blog.id} blog={blog} />;
+        return (
+          <div className='mb-10'>
+            <BlogCard key={blog.id} blog={blog} />
+            <hr></hr>
+          </div>
+        );
       })}
     </div>
   );
