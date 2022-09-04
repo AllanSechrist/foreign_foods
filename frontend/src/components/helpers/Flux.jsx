@@ -124,9 +124,16 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       deleteRestaurant: async (restaurantId) => {
+        const store = getStore();
+        const opts = {
+          headers: {
+            Authorization: "Bearer " + store.token,
+          },
+        };
         await axios
           .delete(
-            `http://localhost:5000/restaurant/delete-restaurant/${restaurantId}`
+            `http://localhost:5000/restaurants/delete-restaurant/${restaurantId}`,
+            opts
           )
           .catch(function (error) {
             console.log(error);
@@ -171,8 +178,14 @@ const getState = ({ getStore, getActions, setStore }) => {
           });
       },
       deleteBlog: async (blogId) => {
+        const store = getStore();
+        const opts = {
+          headers: {
+            Authorization: "Bearer " + store.token,
+          },
+        };
         await axios
-          .delete(`http://localhost:5000/blog/delete-blog/${blogId}`)
+          .delete(`http://localhost:5000/blog/delete-blog/${blogId}`, opts)
           .catch(function (error) {
             console.log(error);
           });
