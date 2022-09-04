@@ -1,10 +1,12 @@
-import React from 'react'
-import NewRestaurantForm from '../NewRestaurantForm'
+import React from "react";
+import NewRestaurantForm from "../NewRestaurantForm";
 
 function NewRestaurant() {
-    return (
-        <NewRestaurantForm />
-    )
+  return (
+    <div className='mt-10'>
+      <NewRestaurantForm />
+    </div>
+  );
 }
 
-export default NewRestaurant
+export default NewRestaurant;

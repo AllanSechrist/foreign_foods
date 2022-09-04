@@ -132,25 +132,44 @@ const getState = ({ getStore, getActions, setStore }) => {
             console.log(error);
           });
       },
-      // editRestaurant: async (restaurantId) => {
-      //   const store = getStore();
-      //   const opts = {
-      //     headers: {
-      //       Authorization: "Bearer " + store.token,
-      //     },
-      //   };
-      //   await axios
-      //     .patch(
-      //       `http://localhost:5000/restaurant/edit-restaurant/${restaurantId}`,
-      //       {
-      //
-      //       },
-      //       opts
-      //     )
-      //     .catch(function (error) {
-      //       console.log(error);
-      //     });
-      // },
+      editRestaurant: async (
+        restaurantId,
+        restaurantName,
+        style,
+        website,
+        location,
+        openTime,
+        closeTime,
+        foodRating,
+        priceRating,
+        serviceRating
+      ) => {
+        const store = getStore();
+        const opts = {
+          headers: {
+            Authorization: "Bearer " + store.token,
+          },
+        };
+        await axios
+          .patch(
+            `http://localhost:5000/restaurants/edit-restaurant/${restaurantId}`,
+            {
+              name: restaurantName,
+              style: style,
+              website: website,
+              location: location,
+              open: openTime,
+              close: closeTime,
+              food_rating: foodRating,
+              price_rating: priceRating,
+              service_rating: serviceRating,
+            },
+            opts
+          )
+          .catch(function (error) {
+            console.log(error);
+          });
+      },
       deleteBlog: async (blogId) => {
         await axios
           .delete(`http://localhost:5000/blog/delete-blog/${blogId}`)

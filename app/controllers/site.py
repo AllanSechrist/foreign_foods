@@ -81,6 +81,14 @@ def restaurants():
     return jsonify({"restaurant": output})
 
 
+@site.route("/restaurants/<int:restaurant_id>", methods=["GET"])
+def get_restaurant(restaurant_id):
+    requested_restaurant = Restaurant.query.get(restaurant_id)
+    restaurant_schema = RestaurantSchema()
+    output = restaurant_schema.dump(requested_restaurant)
+    return jsonify({"restaurant": output})
+
+
 @site.route("/restaurants/<int:restaurant_id>/blog")
 def get_restaurant_blog(restaurant_id):
     requested_restaurant = Restaurant.query.get(restaurant_id)
@@ -119,3 +127,26 @@ def delete_restaurant(restaurant_id):
         return jsonify({"msg": "Restaurant Deleted!"}), 200
     else:
         return jsonify({"msg": "Blog does not exist"}), 404
+
+
+@site.route("/restaurants/edit-restaurant/<int:restaurant_id>", methods=["PATCH"])
+@jwt_required()
+def edit_restaurant(restaurant_id):
+    restaurant_to_update = Restaurant.query.get(restaurant_id)
+
+    if restaurant_to_update:
+        restaurant_to_update.name = (request.json.get("name", None),)
+        restaurant_to_update.style = (request.json.get("style", None),)
+        restaurant_to_update.website = (request.json.get("website", None),)
+        restaurant_to_update.location = (request.json.get("location", None),)
+        restaurant_to_update.open = (request.json.get("open", None),)
+        restaurant_to_update.close = (request.json.get("close", None),)
+        restaurant_to_update.food_rating = (request.json.get("food_rating", None),)
+        restaurant_to_update.price_rating = (request.json.get("price_rating", None),)
+        restaurant_to_update.service_rating = (
+            request.json.get("service_rating", None),
+        )
+    else:
+        return jsonify({"msg": "Restaurant does not exsist!"}), 401
+
+    return jsonify({"msg": "Restaurant has been edited!"}), 200

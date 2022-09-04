@@ -38,7 +38,9 @@ function RestaurantCard({
                 >
                   Delete Restaurant <DeleteIcon />
                 </button>
-                <button className="btn btn-accent">Edit Restaurant</button>
+                <Link to={`/restaurants/${id}`}>
+                  <button className="btn btn-accent">Edit Restaurant</button>
+                </Link>
               </>
             )}
           </div>
