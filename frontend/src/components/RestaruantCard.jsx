@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Context } from "./helpers/Context";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ReactComponent as DeleteIcon } from "../assets/svg/deleteIcon.svg";
 import { ReactComponent as ViewBlogIcon } from "../assets/svg/visibilityIcon.svg";
 
@@ -8,6 +8,7 @@ function RestaurantCard({
   restaurant: { id, name, style, food_rating, price_rating, service_rating },
 }) {
   const { store, actions } = useContext(Context);
+  const navigate = useNavigate()
   return (
     <>
       <div className="card shadow-xl bg-base-100">
@@ -33,7 +34,7 @@ function RestaurantCard({
                 <button
                   className="btn gap-2 btn-error"
                   onClick={() => {
-                    actions.deleteRestaurant(id);
+                    actions.deleteRestaurant(id); navigate('/')
                   }}
                 >
                   Delete Restaurant <DeleteIcon />

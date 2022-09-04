@@ -1,7 +1,8 @@
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Context } from "./helpers/Context";
 import EditBlog from "./pages/EditBlog";
+
 
 function createMarkup(markup) {
   return { __html: markup };
@@ -9,7 +10,7 @@ function createMarkup(markup) {
 
 function BlogCard({ blog: { id, title, subtitle, date, body } }) {
   const { store, actions } = useContext(Context);
-
+  const navigate = useNavigate();
   return (
     <div className="text-left">
       <h1 className="text-6xl">{title}</h1>
@@ -22,7 +23,7 @@ function BlogCard({ blog: { id, title, subtitle, date, body } }) {
             <button
               className="btn btn-outline btn-error"
               onClick={() => {
-                actions.deleteBlog(id);
+                actions.deleteBlog(id); navigate("/")
               }}
             >
               Delete Blog
