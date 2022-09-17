@@ -5,7 +5,7 @@ import { ReactComponent as DeleteIcon } from "../assets/svg/deleteIcon.svg";
 import { ReactComponent as ViewBlogIcon } from "../assets/svg/visibilityIcon.svg";
 
 function RestaurantCard({
-  restaurant: { id, name, style, food_rating, price_rating, service_rating },
+  restaurant: { id, name, style, food_rating, price_rating, service_rating, open, close },
 }) {
   const { store, actions } = useContext(Context);
   const navigate = useNavigate()
@@ -21,6 +21,10 @@ function RestaurantCard({
             <p className="text-2xl my-2 text-left">Food:{food_rating}</p>
             <p className="text-2xl my-2 text-left">Price: {price_rating}</p>
             <p className="text-2xl my-2 text-left">Service: {service_rating}</p>
+          </div>
+          <div class="mt-5">
+            <div class="badge badge-outline gap-2 mx-5">Open: {open}</div>
+            <div class="badge badge-outline gap-2 mx-5">Close: {close}</div>
           </div>
 
           <div className="card-actions mt-10">
