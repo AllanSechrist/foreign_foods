@@ -7,19 +7,17 @@ function EditBlog() {
   let { blogId } = useParams();
   const [blogToEdit, setBlogToEdit] = useState([]);
 
-  // useEffect(() => {
-  //   actions.getBlogToEdit(blogId);
-  // }, []);
-
   const getBlogToEdit = async () => {
-    const data = await axios.get(`http://localhost:5000/blog/get-blog/${blogId}`)
-    const { blog } = data.data
-    setBlogToEdit(blog)
-  }
+    const data = await axios.get(
+      `http://localhost:5000/blog/get-blog/${blogId}`
+    );
+    const { blog } = data.data;
+    setBlogToEdit(blog);
+  };
 
   useEffect(() => {
-    getBlogToEdit()
-  }, [])
+    getBlogToEdit();
+  }, []);
 
   return (
     <BlogForm

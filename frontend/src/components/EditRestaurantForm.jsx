@@ -3,13 +3,6 @@ import { Form, Field } from "react-final-form";
 import { Context } from "./helpers/Context";
 import { useNavigate } from "react-router-dom";
 
-// const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
-
-// const onSubmit = async values => {
-//     await sleep(300)
-//     window.alert(JSON.stringify(values, 0, 2))
-// }
-
 const hours = Array.from(new Array(12), (x, i) => i + 1);
 const ampm = ["AM", "PM"];
 const minutes = ["00", "15", "30", "45"];

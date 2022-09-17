@@ -110,17 +110,16 @@ def edit_restaurant(restaurant_id):
     restaurant_to_update = Restaurant.query.get(restaurant_id)
 
     if restaurant_to_update:
-        restaurant_to_update.name = (request.json.get("name", None),)
-        restaurant_to_update.style = (request.json.get("style", None),)
-        restaurant_to_update.website = (request.json.get("website", None),)
-        restaurant_to_update.location = (request.json.get("location", None),)
-        restaurant_to_update.open = (request.json.get("open", None),)
-        restaurant_to_update.close = (request.json.get("close", None),)
-        restaurant_to_update.food_rating = (request.json.get("food_rating", None),)
-        restaurant_to_update.price_rating = (request.json.get("price_rating", None),)
-        restaurant_to_update.service_rating = (
-            request.json.get("service_rating", None),
-        )
+        restaurant_to_update.name = request.json.get("name", None)
+        restaurant_to_update.style = request.json.get("style", None)
+        restaurant_to_update.website = request.json.get("website", None)
+        restaurant_to_update.location = request.json.get("location", None)
+        restaurant_to_update.open = request.json.get("open", None)
+        restaurant_to_update.close = request.json.get("close", None)
+        restaurant_to_update.food_rating = request.json.get("food_rating", None)
+        restaurant_to_update.price_rating = request.json.get("price_rating", None)
+        restaurant_to_update.service_rating = request.json.get("service_rating", None)
+        db.session.commit()
     else:
         return jsonify({"msg": "Restaurant does not exsist!"}), 401
 

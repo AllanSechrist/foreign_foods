@@ -140,7 +140,6 @@ const getState = ({ getStore, getActions, setStore }) => {
           });
       },
       editRestaurant: async (
-        restaurantId,
         restaurantName,
         style,
         website,
@@ -149,7 +148,8 @@ const getState = ({ getStore, getActions, setStore }) => {
         closeTime,
         foodRating,
         priceRating,
-        serviceRating
+        serviceRating,
+        restaurantId
       ) => {
         const store = getStore();
         const opts = {
