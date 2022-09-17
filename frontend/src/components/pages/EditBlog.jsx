@@ -19,7 +19,7 @@ function EditBlog() {
 
   useEffect(() => {
     getBlogToEdit()
-  })
+  }, [])
 
   return (
     <BlogForm

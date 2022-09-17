@@ -1,45 +1,22 @@
 from flask import (
     render_template,
-    redirect,
     Blueprint,
-    flash,
-    url_for,
-    abort,
     jsonify,
     request,
 )
 
-# from flask_login import login_user, login_required, current_user, logout_user
-from werkzeug.security import generate_password_hash, check_password_hash
-from functools import wraps
+
+from werkzeug.security import check_password_hash
 from flask_jwt_extended import create_access_token
-from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
 
 from ..extensions import db
-from ..models.blog_post import BlogPost
 from ..models.user import User
 from ..models.restaurant import Restaurant
-from ..models.forms import LoginForm, RestaurantForm, BlogForm, RegisterForm
-from ..models.schemas import BlogPostSchema, UserSchema, RestaurantSchema
+from ..models.schemas import BlogPostSchema, RestaurantSchema
 
 
 site = Blueprint("site", __name__, template_folder="templates")
-
-
-# @login_manager.user_loader
-# def load_user(user_id):
-#     return User.query.get(int(user_id))
-
-
-# def admin_only(function):
-#     @wraps(function)
-#     def wrapper_function(*args, **kwargs):
-#         if not current_user.is_authenticated or current_user.id != 1:
-#             return abort(403)
-#         return function(*args, **kwargs)
-
-#     return wrapper_function
 
 
 @site.route("/")
@@ -68,8 +45,6 @@ def login():
 
 @site.route("/logout")
 def logout():
-    # logout_user()
-    # return redirect(url_for('site.site_index'))
     return jsonify({"msg": "User has been logged out"})
 
 

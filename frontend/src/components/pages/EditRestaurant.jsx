@@ -4,7 +4,7 @@ import EditRestaurantForm from "../EditRestaurantForm";
 import axios from "axios";
 
 function EditRestaurant() {
-  let { restaurantId } = useParams;
+  let { restaurantId } = useParams();
   const [restaurantToEdit, setRestaurantToEdit] = useState([]);
 
   const getRestaurantToEdit = async () => {
@@ -13,11 +13,12 @@ function EditRestaurant() {
     );
     const { restaurant } = data.data;
     setRestaurantToEdit(restaurant);
+    console.log(restaurant)
   };
 
   useEffect(() => {
     getRestaurantToEdit();
-  });
+  }, []);
 
   return (
     <div>
@@ -27,6 +28,9 @@ function EditRestaurant() {
         style={restaurantToEdit.style}
         website={restaurantToEdit.website}
         location={restaurantToEdit.location}
+        food_rating={restaurantToEdit.food_rating}
+        service_rating={restaurantToEdit.service_rating}
+        price_rating={restaurantToEdit.price_rating}
       />
     </div>
   );

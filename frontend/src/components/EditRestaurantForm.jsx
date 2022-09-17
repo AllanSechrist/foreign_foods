@@ -17,7 +17,7 @@ const foodRating = ["✘", "😋", "😋😋", "😋😋😋", "😋😋😋😋
 const price = ["💸", "💸💸", "💸💸💸", "💸💸💸💸", "💸💸💸💸💸"];
 const service = ["👍", "👍👍", "👍👍👍", "👍👍👍👍", "👍👍👍👍👍"];
 
-function EditRestaurantForm({ restaurantId, name, style, website, location }) {
+function EditRestaurantForm({ restaurantId, name, style, website, location, food_rating, service_rating, price_rating }) {
   const { actions } = useContext(Context);
   const navigate = useNavigate();
   const onSubmit = (values) => {
@@ -43,7 +43,7 @@ function EditRestaurantForm({ restaurantId, name, style, website, location }) {
   };
   return (
     <div>
-      <h1 className="text-center text-6xl mb-10">Edit Restaruant Restaurant</h1>
+      <h1 className="text-center text-6xl mb-10">Edit Restaruant</h1>
       <Form
         onSubmit={onSubmit}
         initialValues={{
@@ -51,6 +51,9 @@ function EditRestaurantForm({ restaurantId, name, style, website, location }) {
           style: style,
           website: website,
           location: location,
+          food_rating: food_rating,
+          service: service_rating,
+          price: price_rating,
         }}
         validate={(values) => {
           const errors = {};
