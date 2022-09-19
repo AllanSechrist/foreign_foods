@@ -35,7 +35,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       login: async (email, password) => {
         await axios
-          .post("http://localhost:5000/login", {
+          .post("http://localhost:5000/admin", {
             email: email,
             password: password,
           })

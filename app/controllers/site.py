@@ -29,7 +29,7 @@ def about():
     return render_template("about.html")
 
 
-@site.route("/login", methods=["POST"])
+@site.route("/admin", methods=["POST"])
 def login():
     email = request.json.get("email", None)
     password = request.json.get("password", None)
@@ -56,12 +56,12 @@ def restaurants():
     return jsonify({"restaurant": output})
 
 
-@site.route("/restaurants/<int:restaurant_id>", methods=["GET"])
-def get_restaurant(restaurant_id):
-    requested_restaurant = Restaurant.query.get(restaurant_id)
-    restaurant_schema = RestaurantSchema()
-    output = restaurant_schema.dump(requested_restaurant)
-    return jsonify({"restaurant": output})
+# @site.route("/restaurants/<int:restaurant_id>", methods=["GET"])
+# def get_restaurant(restaurant_id):
+#     requested_restaurant = Restaurant.query.get(restaurant_id)
+#     restaurant_schema = RestaurantSchema()
+#     output = restaurant_schema.dump(requested_restaurant)
+#     return jsonify({"restaurant": output})
 
 
 @site.route("/restaurants/<int:restaurant_id>/blog")
@@ -104,12 +104,19 @@ def delete_restaurant(restaurant_id):
         return jsonify({"msg": "Blog does not exist"}), 404
 
 
-@site.route("/restaurants/edit-restaurant/<int:restaurant_id>", methods=["PATCH"])
+@site.route(
+    "/restaurants/edit-restaurant/<int:restaurant_id>", methods=["GET", "PATCH"]
+)
 @jwt_required()
 def edit_restaurant(restaurant_id):
     restaurant_to_update = Restaurant.query.get(restaurant_id)
 
-    if restaurant_to_update:
+    if request.method == "GET":
+        restaurant_schema = RestaurantSchema()
+        output = restaurant_schema.dump(restaurant_to_update)
+        return jsonify({"restaurant": output})
+
+    if request.method == "PATCH" and restaurant_to_update:
         restaurant_to_update.name = request.json.get("name", None)
         restaurant_to_update.style = request.json.get("style", None)
         restaurant_to_update.website = request.json.get("website", None)
@@ -120,7 +127,6 @@ def edit_restaurant(restaurant_id):
         restaurant_to_update.price_rating = request.json.get("price_rating", None)
         restaurant_to_update.service_rating = request.json.get("service_rating", None)
         db.session.commit()
-    else:
-        return jsonify({"msg": "Restaurant does not exsist!"}), 401
+        return jsonify({"msg": "Restaurant has been edited!"}), 200
 
-    return jsonify({"msg": "Restaurant has been edited!"}), 200
+    return jsonify({"msg": "could not find requested restaurant."}), 404

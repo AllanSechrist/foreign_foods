@@ -25,14 +25,14 @@ function PageRouter() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/restaurants" element={<Restaurants />} />
-            <Route path="/restaurants/:restaurantId" element={<EditRestaurant />} />
+            <Route path="/restaurants/edit-restaurant/:restaurantId" element={<EditRestaurant />} />
             <Route path="restaurants/new-restaurant" element={<NewRestaurant />} />
             <Route path="/blog/new-blog/:restaurantId" element={<NewBlog />} />
             <Route path="/blog/edit-blog/:blogId" element={<EditBlog />} />
             <Route path="/blog" element={<Blogs />} />
             <Route path="/restaurants/:restaurantId/blog" element={<Blog />} />
             <Route path="/about" element={<About />} />
-            <Route path="/login" element={<Login />} />
+            <Route path="/admin" element={<Login />} />
           </Routes>
         </main>
         <Footer />

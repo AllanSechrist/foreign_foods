@@ -43,7 +43,7 @@ function RestaurantCard({
                 >
                   Delete Restaurant <DeleteIcon />
                 </button>
-                <Link to={`/restaurants/${id}`}>
+                <Link to={`/restaurants/edit-restaurant/${id}`}>
                   <button className="btn btn-accent">Edit Restaurant</button>
                 </Link>
               </>

@@ -1,19 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
+import { Context } from "../helpers/Context";
 import EditRestaurantForm from "../EditRestaurantForm";
 import axios from "axios";
 
 function EditRestaurant() {
   let { restaurantId } = useParams();
   const [restaurantToEdit, setRestaurantToEdit] = useState([]);
+  const { store } = useContext(Context);
+  const opts = {
+    headers: {
+      Authorization: "Bearer " + store.token,
+    },
+  };
 
   const getRestaurantToEdit = async () => {
     const data = await axios.get(
-      `http://localhost:5000/restaurants/${restaurantId}`
+      `http://localhost:5000/restaurants/edit-restaurant/${restaurantId}`, opts
     );
     const { restaurant } = data.data;
     setRestaurantToEdit(restaurant);
-    console.log(restaurant)
+    console.log(restaurant);
   };
 
   useEffect(() => {

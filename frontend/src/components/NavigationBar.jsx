@@ -34,11 +34,7 @@ export default function NavigationBar() {
                 +New Restaurant
               </Link>
             )}
-            {!store.token ? (
-              <Link className="btn btn-ghost btn-sm mx-1" to="/login">
-                Login
-              </Link>
-            ) : (
+            {store.token && (
               <button
                 className="btn btn-ghost btn-sm mx-1"
                 onClick={() => actions.logout()}

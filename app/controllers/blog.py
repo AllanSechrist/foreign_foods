@@ -10,18 +10,15 @@ from ..models.blog_post import BlogPost
 from ..models.schemas import BlogPostSchema
 
 
-blog = Blueprint('blog', __name__, url_prefix='/blog', template_folder='templates')
+blog = Blueprint("blog", __name__, url_prefix="/blog", template_folder="templates")
 
 
-
-
-@blog.route('/')
+@blog.route("/")
 def all_blogs():
     blogs = BlogPost.query.all()
     blog_schema = BlogPostSchema(many=True)
     output = blog_schema.dump(blogs)
     return jsonify({"blog": output})
-
 
 
 @blog.route("/new-blog/<int:restaurant_id>", methods=["POST"])
@@ -32,12 +29,12 @@ def add_new_post(restaurant_id):
     user = User.query.filter_by(email=email).first()
     if requested_restaurant:
         new_post = BlogPost(
-            title = request.json.get("title", None),
-            subtitle = request.json.get("subtitle", None),
-            body = request.json.get("body", None),
-            author = user,
-            restaurant = requested_restaurant,
-            date = date.today().strftime("%B %d, %Y"),
+            title=request.json.get("title", None),
+            subtitle=request.json.get("subtitle", None),
+            body=request.json.get("body", None),
+            author=user,
+            restaurant=requested_restaurant,
+            date=date.today().strftime("%B %d, %Y"),
         )
         db.session.add(new_post)
         db.session.commit()
@@ -46,33 +43,35 @@ def add_new_post(restaurant_id):
         return jsonify({"msg": "Restaurant does not exsist"}), 404
 
 
-@blog.route("/get-blog/<int:blog_id>", methods=["GET"])
-def get_blog(blog_id):
-    blog_to_get = BlogPost.query.get(blog_id)
-    blog_schema = BlogPostSchema()
-    output = blog_schema.dump(blog_to_get)
-    return jsonify({"blog": output})
+# @blog.route("/get-blog/<int:blog_id>", methods=["GET"])
+# def get_blog(blog_id):
+#     blog_to_get = BlogPost.query.get(blog_id)
+#     blog_schema = BlogPostSchema()
+#     output = blog_schema.dump(blog_to_get)
+#     return jsonify({"blog": output})
 
 
-@blog.route("/edit-blog/<int:blog_id>", methods=["PATCH"])
+@blog.route("/edit-blog/<int:blog_id>", methods=["GET", "PATCH"])
 @jwt_required()
 def edit_blog(blog_id):
     blog_to_update = BlogPost.query.get(blog_id)
 
-    if blog_to_update:
+    if request.method == "GET":
+        blog_schema = BlogPostSchema()
+        output = blog_schema.dump(blog_to_update)
+        return jsonify({"blog": output})
+
+    if request.method == "PATCH" and blog_to_update:
         blog_to_update.title = request.json.get("title", None)
         blog_to_update.subtitle = request.json.get("subtitle", None)
         blog_to_update.body = request.json.get("body", None)
         db.session.commit()
-    else:
-        return jsonify({"msg": "Blog does not exsist!"}), 401
-        
-    
-        
-    return jsonify({"msg": "Blog has been edited!"}), 200
+        return jsonify({"msg": "Blog has been edited!"}), 200
+
+    return jsonify({"msg": "Blog does not exsist!"}), 401
 
 
-@blog.route('/delete-blog/<int:blog_id>', methods=["DELETE"])
+@blog.route("/delete-blog/<int:blog_id>", methods=["DELETE"])
 @jwt_required()
 def delete_blog(blog_id):
     blog_to_delete = BlogPost.query.get(blog_id)
