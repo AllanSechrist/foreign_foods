@@ -10,6 +10,7 @@ import NewBlog from "./pages/NewBlog";
 import EditBlog from "./pages/EditBlog";
 import About from "./pages/About";
 import Login from "./pages/Login";
+import NotFound from "./pages/NotFound";
 import NavigationBar from "./NavigationBar";
 import Footer from "./Footer";
 import injectContext from "./helpers/Context";
@@ -33,6 +34,7 @@ function PageRouter() {
             <Route path="/restaurants/:restaurantId/blog" element={<Blog />} />
             <Route path="/about" element={<About />} />
             <Route path="/admin" element={<Login />} />
+            <Route path="/*" element={<NotFound />} />
           </Routes>
         </main>
         <Footer />
