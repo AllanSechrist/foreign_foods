@@ -22,9 +22,9 @@ function RestaurantCard({
             <p className="text-2xl my-2 text-left">Price: {price_rating}</p>
             <p className="text-2xl my-2 text-left">Service: {service_rating}</p>
           </div>
-          <div class="mt-5">
-            <div class="badge badge-outline gap-2 mx-5">Open: {open}</div>
-            <div class="badge badge-outline gap-2 mx-5">Close: {close}</div>
+          <div className="mt-5">
+            <div className="badge badge-outline gap-2 mx-5">Open: {open}</div>
+            <div className="badge badge-outline gap-2 mx-5">Close: {close}</div>
           </div>
 
           <div className="card-actions mt-10">
